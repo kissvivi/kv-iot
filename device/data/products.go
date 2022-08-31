@@ -1,10 +1,13 @@
 package data
 
-//CREATE TABLE `products`  (
-//`id` bigint(0) NOT NULL AUTO_INCREMENT,
-//`name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '产品名称',
-//`desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '产品介绍',
-//`channel_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '产品通讯通道id',
-//`product_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '产品标识',
-//PRIMARY KEY (`id`) USING BTREE
-//) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+type Products struct {
+	ID         int64  `json:"id" gorm:"column:id"`
+	Name       string `json:"name" gorm:"column:name"`               // 产品名称
+	Desc       string `json:"desc" gorm:"column:desc"`               // 产品介绍
+	ChannelID  string `json:"channel_id" gorm:"column:channel_id"`   // 产品通讯通道id
+	ProductKey string `json:"product_key" gorm:"column:product_key"` // 产品标识
+}
+
+func (m *Products) TableName() string {
+	return "products"
+}

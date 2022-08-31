@@ -1,23 +1,8 @@
 package data
 
-// Device 设备信息
-type Device struct {
-}
-
-// Point 点信息
-type Point struct {
-}
-
-type DeviceRepo interface {
-	Add()
-	Delete()
-	Update()
-	Select()
-}
-
-type PointRepo interface {
-	Add()
-	Delete()
-	Update()
-	Select()
+type baseRepo interface {
+	Add[T any](in T)(out T)
+	Delete[T any](in T)(out T)
+	Update[T any](in T)(out T)
+	Select[T any](in T)(out T)
 }
