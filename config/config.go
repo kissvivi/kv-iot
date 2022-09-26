@@ -59,9 +59,9 @@ type Database struct {
 func InitConfig() (*Config, error) {
 	v := viper.New()
 
-	v.AddConfigPath(".")
-	v.SetConfigName("config")
-	//v.SetConfigFile("config/config.yml")
+	//v.AddConfigPath(".")
+	//v.SetConfigName("config")
+	v.SetConfigFile("config/config.yml")
 	err := v.ReadInConfig()
 	if err != nil {
 		return nil, err

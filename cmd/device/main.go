@@ -6,15 +6,18 @@ import (
 	"github.com/spf13/cobra"
 	"github.kissvivi.kv-iot/config"
 	"github.kissvivi.kv-iot/device/api"
-	v1 "github.kissvivi.kv-iot/device/server/http/v1"
+	v1 "github.kissvivi.kv-iot/device/endpoint/http/v1"
+	"google.golang.org/grpc"
+	"log"
+	"net"
 	"net/http"
 	"os"
 	"time"
 )
 
-// serverCmd represents the server command
+// serverCmd represents the endpoint command
 var serverCmd = &cobra.Command{
-	Use:   "server",
+	Use:   "endpoint",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -41,6 +44,7 @@ func runServer(cmd *cobra.Command, args []string) {
 	}
 	engine := v1.InitRouter(api.BaseApi{})
 	s := initServer(cfg, engine)
+	initGrpcServer()
 	fmt.Println(`
 	 ___  __    ___      ___             ___  ________  _________   
 	|\  \|\  \ |\  \    /  /|           |\  \|\   __  \|\___   ___\ 
@@ -61,6 +65,19 @@ func runServer(cmd *cobra.Command, args []string) {
 		return
 	}
 
+}
+
+func initGrpcServer() {
+	lis, err := net.Listen("tcp", ":9000")
+	if err != nil {
+		log.Fatalf("failed to listen: %v", err)
+	}
+
+	grpcServer := grpc.NewServer()
+
+	if err := grpcServer.Serve(lis); err != nil {
+		log.Fatalf("failed to serve: %s", err)
+	}
 }
 
 func initServer(setting *config.Config, r *gin.Engine) *http.Server {
@@ -85,4 +102,6 @@ func Execute() {
 
 func main() {
 	Execute()
+
+	//println(int(1 << uint(13)) & 12)
 }

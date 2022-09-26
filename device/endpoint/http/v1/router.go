@@ -16,7 +16,7 @@ func InitRouter(api api.BaseApi) engine {
 	gin.SetMode("debug")
 
 	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{"message": "pong this is kv-iot device server"})
+		c.JSON(200, gin.H{"message": "pong this is kv-iot device endpoint"})
 	})
 
 	routers(r, api)
