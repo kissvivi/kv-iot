@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
 	"github.kissvivi.kv-iot/config"
+	"github.kissvivi.kv-iot/db"
 	"github.kissvivi.kv-iot/device/api"
 	v1 "github.kissvivi.kv-iot/device/endpoint/http/v1"
 	"google.golang.org/grpc"
@@ -42,9 +43,14 @@ func runServer(cmd *cobra.Command, args []string) {
 	if err != nil {
 		panic(err)
 	}
+	//初始化数据库
+	baseDB := db.NewBaseDB("mysql")
+	baseDB.SetConfig(cfg)
+	baseDB.InitDB()
+
 	engine := v1.InitRouter(api.BaseApi{})
 	s := initServer(cfg, engine)
-	initGrpcServer()
+	go initGrpcServer()
 	fmt.Println(`
 	 ___  __    ___      ___             ___  ________  _________   
 	|\  \|\  \ |\  \    /  /|           |\  \|\   __  \|\___   ___\ 

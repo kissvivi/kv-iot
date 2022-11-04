@@ -23,7 +23,7 @@ func BinaryToJSON(xxx uint8, variables map[string]string, decodeScript string, b
 	if err != nil {
 		return nil, errors.New(err.Error() + "execute js error")
 	}
-	fmt.Println(v)
+	fmt.Println("BinaryToJSON", v)
 	return json.Marshal(v)
 }
 

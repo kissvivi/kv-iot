@@ -13,7 +13,7 @@ func TestBinaryToJSON(t *testing.T) {
 		b            []byte
 	}
 
-	decodeScript := "function Decode(ss){ss = 1+1 ;console.log(ss) return ss};"
+	decodeScript := "function Decode(ss){ss = 1 ;console.log(ss) };"
 	a := args{decodeScript: decodeScript}
 	got, err := BinaryToJSON(a.xxx, a.variables, a.decodeScript, a.b)
 	fmt.Println(got)
