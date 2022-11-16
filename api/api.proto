@@ -1,9 +1,0 @@
-syntax = "proto3";
-package api;
-option go_package = "./;api";
-
-
-message ResponseBase {
-  uint32 Code = 1;
-  string Message = 2;
-}

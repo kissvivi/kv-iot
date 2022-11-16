@@ -11,11 +11,19 @@ type Config struct {
 
 type Application struct {
 	DeviceServer DeviceServer `json:"deviceserver"`
+	AuthServer   AuthServer   `json:"authserver"`
 }
 
 type DeviceServer struct {
 	Version    string     `json:"version"`
 	HttpServer HttpServer `json:"httpserver"`
+}
+
+type AuthServer struct {
+	Version      string     `json:"version"`
+	HttpServer   HttpServer `json:"httpserver"`
+	JwtKey       string     `json:"jwt_key"`
+	TokenTimeout int64      `json:"tokentimeout"`
 }
 
 type HttpServer struct {
