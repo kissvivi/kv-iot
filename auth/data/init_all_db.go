@@ -2,8 +2,8 @@ package data
 
 import (
 	"fmt"
-	"github.kissvivi.kv-iot/config"
-	"github.kissvivi.kv-iot/db"
+	"kv-iot/config"
+	"kv-iot/db"
 )
 
 func InitDB(cfg *config.Config) {

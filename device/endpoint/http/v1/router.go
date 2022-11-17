@@ -2,7 +2,7 @@ package v1
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.kissvivi.kv-iot/device/api"
+	"kv-iot/device/api"
 )
 
 type engine = *gin.Engine

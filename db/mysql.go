@@ -2,9 +2,9 @@ package db
 
 import (
 	"fmt"
-	"github.kissvivi.kv-iot/config"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"kv-iot/config"
 )
 
 type MysqlDB struct {

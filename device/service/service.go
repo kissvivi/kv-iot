@@ -2,7 +2,7 @@ package service
 
 import (
 	"fmt"
-	"github.kissvivi.kv-iot/device/data"
+	"kv-iot/device/data"
 )
 
 var _ baseService = (*BaseServiceImpl)(nil)

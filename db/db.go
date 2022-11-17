@@ -1,6 +1,6 @@
 package db
 
-import "github.kissvivi.kv-iot/config"
+import "kv-iot/config"
 
 type BaseDB interface {
 	InitDB(conf *config.Config) //初始化链接驱动

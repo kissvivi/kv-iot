@@ -1,6 +1,6 @@
 package api
 
-import "github.kissvivi.kv-iot/device/api/baseapi"
+import "kv-iot/device/api/baseapi"
 
 type BaseApi struct {
 	DeviceApi baseapi.DeviceApi

@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
-	"github.kissvivi.kv-iot/auth/api"
-	"github.kissvivi.kv-iot/auth/data"
-	v1 "github.kissvivi.kv-iot/auth/endpoint/http/v1"
-	"github.kissvivi.kv-iot/config"
 	"google.golang.org/grpc"
+	"kv-iot/auth/api"
+	"kv-iot/auth/data"
+	v1 "kv-iot/auth/endpoint/http/v1"
+	"kv-iot/config"
 	"log"
 	"net"
 	"net/http"
@@ -86,7 +86,7 @@ func initGrpcServer() {
 
 func initServer(setting *config.Config, r *gin.Engine) *http.Server {
 	s := &http.Server{
-		Addr:           fmt.Sprintf("%v:%v", setting.Application.DeviceServer.HttpServer.Host, setting.Application.DeviceServer.HttpServer.Port),
+		Addr:           fmt.Sprintf("%v:%v", setting.Application.AuthServer.HttpServer.Host, setting.Application.AuthServer.HttpServer.Port),
 		Handler:        r,
 		ReadTimeout:    5 * time.Minute,
 		WriteTimeout:   5 * time.Minute,

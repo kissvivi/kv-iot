@@ -2,8 +2,8 @@ package baseapi
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.kissvivi.kv-iot/device/data"
-	"github.kissvivi.kv-iot/device/service"
+	"kv-iot/device/data"
+	"kv-iot/device/service"
 )
 
 type DeviceApi struct {

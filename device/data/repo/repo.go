@@ -1,6 +1,6 @@
 package repo
 
-import "github.kissvivi.kv-iot/db"
+import "kv-iot/db"
 
 type baseRepo interface {
 }

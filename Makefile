@@ -18,7 +18,7 @@ define make_docker
 		--no-cache \
 		--build-arg SVC=$(svc) \
 		--tag=$(KV_DOCKER_IMAGE_NAME_PREFIX)/$(svc) \
-		-f docker/Dockerfile .
+		-f Dockerfile .
 endef
 
 all: $(SERVICES)

@@ -6,10 +6,10 @@ services:
     image: kv/auth:latest
     container_name: kv-auth
     expose:
-      - 8100
+      - 8101
     restart: on-failure
     ports:
-      - 8100:8100
+      - 8101:8101
 #    depends_on:
 #      - kv-keto
 
@@ -18,9 +18,9 @@ services:
     container_name: kv-device
     restart: always
     expose:
-      - 8080
+      - 8100
     ports:
-      - 8080:8080
+      - 8100:8100
     depends_on:
       - kv-auth
     volumes:
