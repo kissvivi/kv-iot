@@ -8,6 +8,9 @@ type User struct {
 	Password string
 }
 
+func (u *User) TableName() string {
+	return "user"
+}
 func (u User) IsAdmin() bool {
 
 	return true

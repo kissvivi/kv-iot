@@ -3,24 +3,23 @@ application:
     version: 1.0.0
     httpserver:
       host: 0.0.0.0
-      port: 8081
+      port: 8100
       mode: dev
       readtimeout: 5
       writetimeout: 5
   authserver:
     version: 1.0.0
-      httpserver:
-        host: 0.0.0.0
-        port: 8081
-        mode: dev
-        readtimeout: 5
-        writetimeout: 5
+    httpserver:
+      host: 0.0.0.0
+      port: 8101
+      mode: dev
+      readtimeout: 5
+      writetimeout: 5
     jwtkey: kvkvkvkvkv
     tokentimeout: 60
 datasource:
-  type: mysql
-  host: 127.0.0.1
-  port: 3306
-  username: root
-  password: admin
-  dbname:
+  mysql:
+    url: 172.31.45.151:3306
+    username: admin
+    password: admin
+    dbname: kv-iot

@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
+	"github.kissvivi.kv-iot/auth/api"
+	"github.kissvivi.kv-iot/auth/data"
+	v1 "github.kissvivi.kv-iot/auth/endpoint/http/v1"
 	"github.kissvivi.kv-iot/config"
-	"github.kissvivi.kv-iot/device/api"
-	"github.kissvivi.kv-iot/device/data"
-	v1 "github.kissvivi.kv-iot/device/endpoint/http/v1"
 	"google.golang.org/grpc"
 	"log"
 	"net"
@@ -48,7 +48,7 @@ func runServer(cmd *cobra.Command, args []string) {
 
 	engine := v1.InitRouter(api.BaseApi{})
 	s := initServer(cfg, engine)
-	go initGrpcServer()
+	//go initGrpcServer()
 	fmt.Println(`
 	 ___  __    ___      ___             ___  ________  _________   
 	|\  \|\  \ |\  \    /  /|           |\  \|\   __  \|\___   ___\ 
@@ -62,7 +62,7 @@ func runServer(cmd *cobra.Command, args []string) {
 	 	欢迎使用  kv-iot
 	 	服务版本 : %v 
 	 	服务运行地址 : %v
-	`, cfg.Application.DeviceServer.Version, s.Addr)
+	`, cfg.Application.AuthServer.Version, s.Addr)
 
 	err = s.ListenAndServe()
 	if err != nil {

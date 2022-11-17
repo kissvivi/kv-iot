@@ -1,7 +1,10 @@
 package data
 
+import "gorm.io/gorm"
+
 type KvAction struct {
-	ID         int64  `json:"id" gorm:"column:id"`
+	//ID         int64  `json:"id" gorm:"column:id"`
+	gorm.Model
 	Name       string `json:"name" gorm:"column:name"`               // 动作名称
 	Identifier string `json:"identifier" gorm:"column:identifier"`   // 动作标识符
 	ProductKey string `json:"product_key" gorm:"column:product_key"` // 产品标识

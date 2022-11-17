@@ -1,7 +1,10 @@
 package data
 
+import "gorm.io/gorm"
+
 type Channels struct {
-	ID         int64  `json:"id" gorm:"column:id"`
+	gorm.Model
+	//ID         int64  `json:"id" gorm:"column:id"`
 	Name       string `json:"name" gorm:"column:name"`               // 通道名称
 	Desc       string `json:"desc" gorm:"column:desc"`               // 通道描述
 	Encode     string `json:"encode" gorm:"column:encode"`           // 编码脚本

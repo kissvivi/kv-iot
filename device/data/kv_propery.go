@@ -1,7 +1,10 @@
 package data
 
+import "gorm.io/gorm"
+
 type KvProperty struct {
-	ID            int64  `json:"id" gorm:"column:id"`
+	//ID            int64  `json:"id" gorm:"column:id"`
+	gorm.Model
 	Name          string `json:"name" gorm:"column:name"`                       // 属性名称
 	Identifier    string `json:"identifier" gorm:"column:identifier"`           // 属性标识符
 	DataType      string `json:"dataType" gorm:"column:dataType"`               // 属性数据类型

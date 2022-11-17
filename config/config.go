@@ -6,7 +6,7 @@ import (
 
 type Config struct {
 	Application Application `json:"application"`
-	Database    Database    `json:"database"`
+	Datasource  Datasource  `json:"datasource"`
 }
 
 type Application struct {
@@ -52,17 +52,23 @@ type Redis struct {
 	Dbname   string `json:"dbname"`
 }
 
-type Database struct {
+type Datasource struct {
 	Mysql Mysql `json:"mysql"`
 	Redis Redis `json:"redis"`
 
-	//Type     string `json:"type"`
 	//Host     string `json:"host"`
 	//Port     string `json:"port"`
 	//Username string `json:"username"`
 	//Password string `json:"password"`
 	//Dbname   string `json:"dbname"`
 }
+
+//type DBType struct {
+//	Url      string `json:"url"`
+//	Username string `json:"username"`
+//	Password string `json:"password"`
+//	Dbname   string `json:"dbname"`
+//}
 
 func InitConfig() (*Config, error) {
 	v := viper.New()

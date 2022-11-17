@@ -1,0 +1,43 @@
+version: '3.7'
+
+services:
+
+  kv-auth:
+    image: kv/auth:latest
+    container_name: kv-auth
+    expose:
+      - 8100
+    restart: on-failure
+    ports:
+      - 8100:8100
+#    depends_on:
+#      - kv-keto
+
+  kv-device:
+    image: kv/device:latest
+    container_name: kv-device
+    restart: always
+    expose:
+      - 8080
+    ports:
+      - 8080:8080
+    depends_on:
+      - kv-auth
+    volumes:
+      - /var/log:/var/log
+      - /var/www/kv/static:/static
+
+
+
+#  kv-grafana:
+#    image: grafana/grafana:8.4.2
+#    container_name: kv-grafana
+#    depends_on:
+#      - kv-influxdb
+#    restart: on-failure
+#    ports:
+#      - 3000:3000
+#    volumes:
+#      - /var/log:/var/log
+#      - kv-grafana-volume:/var/lib/grafana
+

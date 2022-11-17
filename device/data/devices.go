@@ -1,9 +1,13 @@
 package data
 
-import "time"
+import (
+	"gorm.io/gorm"
+	"time"
+)
 
 type Devices struct {
-	ID          int64     `json:"id" gorm:"column:id"`
+	//ID          int64     `json:"id" gorm:"column:id"`
+	gorm.Model
 	Name        string    `json:"name" gorm:"column:name"`                   // 设备名称
 	ProductID   int64     `json:"product_id" gorm:"column:product_id"`       // 所属产品id
 	Desc        string    `json:"desc" gorm:"column:desc"`                   // 设备描述

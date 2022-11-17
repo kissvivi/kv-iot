@@ -3,9 +3,7 @@ package db
 import "github.kissvivi.kv-iot/config"
 
 type BaseDB interface {
-	InitDB()                         //初始化链接驱动
-	AutoMigrates(dst ...interface{}) //初始化表
-	SetConfig(conf *config.Config)
+	InitDB(conf *config.Config) //初始化链接驱动
 }
 
 func NewBaseDB(t string) BaseDB {
@@ -25,7 +23,5 @@ func main() {
 		panic(err)
 	}
 	baseDB := NewBaseDB("mysql")
-	baseDB.SetConfig(cfg)
-	baseDB.InitDB()
-	baseDB.AutoMigrates()
+	baseDB.InitDB(cfg)
 }

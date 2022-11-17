@@ -8,31 +8,25 @@ import (
 )
 
 type MysqlDB struct {
-	DB       *gorm.DB
-	Url      string
-	UserName string
-	Password string
-	DBName   string
 }
 
-func (m MysqlDB) SetConfig(conf *config.Config) {
-	m.Url = conf.Database.Mysql.Url
-	m.UserName = conf.Database.Mysql.Username
-	m.Password = conf.Database.Mysql.Password
-	m.DBName = conf.Database.Mysql.Dbname
-}
+//func (m MysqlDB) SetConfig(conf *config.Config) {
+//	m.Url = conf.Datasource.Mysql.Url
+//	m.UserName = conf.Datasource.Mysql.Username
+//	m.Password = conf.Datasource.Mysql.Password
+//	m.DBName = conf.Datasource.Mysql.Dbname
+//
+//	fmt.Println(m.Url)
+//}
 
-func (m MysqlDB) AutoMigrates(dst ...interface{}) {
-	if err := m.DB.AutoMigrate(dst); err != nil {
-		panic(err)
-	}
-}
+var MYSQLDB *gorm.DB
 
-func (m MysqlDB) InitDB() {
+func (m MysqlDB) InitDB(conf *config.Config) {
 
+	fmt.Println(m)
 	db, err := gorm.Open(mysql.New(mysql.Config{
 		DSN: fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local",
-			m.UserName, m.Password, m.Url, m.DBName), // DSN data source name
+			conf.Datasource.Mysql.Username, conf.Datasource.Mysql.Password, conf.Datasource.Mysql.Url, conf.Datasource.Mysql.Dbname), // DSN data source name
 		DefaultStringSize:         256,   // string 类型字段的默认长度
 		DisableDatetimePrecision:  true,  // 禁用 datetime 精度，MySQL 5.6 之前的数据库不支持
 		DontSupportRenameIndex:    true,  // 重命名索引时采用删除并新建的方式，MySQL 5.7 之前的数据库和 MariaDB 不支持重命名索引
@@ -42,7 +36,7 @@ func (m MysqlDB) InitDB() {
 	if err != nil {
 		panic(err)
 	}
-	m.DB = db
+	MYSQLDB = db
 }
 
 var _ BaseDB = (*MysqlDB)(nil)
