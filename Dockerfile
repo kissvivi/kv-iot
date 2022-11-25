@@ -1,7 +1,7 @@
 FROM golang:1.17.6-alpine AS builder
 ARG SVC
 
-WORKDIR /kv-iot
+WORKDIR /kv
 
 COPY . .
 

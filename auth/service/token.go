@@ -3,8 +3,8 @@ package service
 import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"github.kissvivi.kv-iot/auth/data"
-	"github.kissvivi.kv-iot/config"
+	"kv-iot/auth/data"
+	"kv-iot/config"
 	"strconv"
 	"time"
 )

@@ -5,3 +5,6 @@ type mqttBroker interface {
 	Sub()
 	Pub()
 }
+
+type Mqtt struct {
+}
