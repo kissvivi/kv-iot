@@ -29,19 +29,13 @@ to quickly create a Cobra application.`,
 	Run: runServer,
 }
 
-//type Application struct {
-//	name string
-//	version string
-//	httpServer *http.Server
-//}
-
 func runServer(cmd *cobra.Command, args []string) {
 	//初始化config
 	//初始化application
 	//启动数据库
 	cfg, err := config.InitConfig()
 	if err != nil {
-		panic(err)
+		panic(any(err))
 	}
 	//初始化DB
 	data.InitDB(cfg)

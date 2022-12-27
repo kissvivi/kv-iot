@@ -34,7 +34,7 @@ func (m MysqlDB) InitDB(conf *config.Config) {
 		SkipInitializeWithVersion: false, // 根据当前 MySQL 版本自动配置
 	}), &gorm.Config{})
 	if err != nil {
-		panic(err)
+		panic(any(err))
 	}
 	MYSQLDB = db
 }

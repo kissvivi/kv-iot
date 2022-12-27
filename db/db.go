@@ -20,7 +20,7 @@ func NewBaseDB(t string) BaseDB {
 func main() {
 	cfg, err := config.InitConfig()
 	if err != nil {
-		panic(err)
+		panic(any(err))
 	}
 	baseDB := NewBaseDB("mysql")
 	baseDB.InitDB(cfg)
