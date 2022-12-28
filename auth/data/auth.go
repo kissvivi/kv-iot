@@ -2,9 +2,8 @@ package data
 
 import (
 	"errors"
-	"fmt"
-	"gorm.io/gorm"
 	"kv-iot/db"
+	"log"
 )
 
 var (
@@ -14,44 +13,45 @@ var (
 	ErrDBDelete = errors.New("数据库删除异常")
 )
 
-//type AuthRepoI [T any] interface {
-//	Add(t T) error
-//	Update(t T) error
-//	Delete(t T) error
-//	Select(t T) error
-//}
-
-type AuthRepo[T any] struct {
-	db *gorm.DB
-}
-
-func NewAuthRepo() *AuthRepo[any] {
-	return &AuthRepo[any]{db: db.MYSQLDB}
+type AuthRepoI[T any] interface {
+	Add(t T) (err error)
+	Update(t T) (err error)
+	Delete(t T) (err error)
+	FindOneByID(id int) (err error, result T)
+	FindAll() (err error, result []T)
 }
 
 func (a AuthRepo[T]) Add(t T) (err error) {
-	fmt.Println(t)
-	err = a.db.Create(&t).Error
+	log.Println(t)
+	err = db.MYSQLDB.Create(&t).Error
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 	}
 	return
 }
 
-func (a AuthRepo[T]) Update(t T) error {
-	return a.db.Updates(&t).Error
+func (a AuthRepo[T]) Update(t T) (err error) {
+	return db.MYSQLDB.Updates(&t).Error
 }
 
-func (a AuthRepo[T]) Delete(t T) error {
-	return a.db.Delete(&t).Error
+func (a AuthRepo[T]) Delete(t T) (err error) {
+	return db.MYSQLDB.Delete(&t).Error
 }
 
-func (a AuthRepo[T]) Select(t T) (err error, result T) {
-	err = a.db.Model(&result).First(&t).Error
+func (a AuthRepo[T]) FindOneByID(id int) (err error, result T) {
+	err = db.MYSQLDB.Where("id", id).First(&result).Error
 	return
 }
 
-func (a AuthRepo[T]) FindAll(t T) (err error, result []T) {
-	err = a.db.Model(&result).Find(&t).Error
+func (a AuthRepo[T]) FindAll() (err error, result []T) {
+	result = make([]T, 0)
+	err = db.MYSQLDB.Find(&result).Error
 	return
 }
+
+type AuthRepo[T any] struct {
+}
+
+//func NewAuthRepo() *AuthRepo[any] {
+//	return &AuthRepo[any]{db: db.MYSQLDB}
+//}

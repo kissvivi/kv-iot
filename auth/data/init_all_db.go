@@ -11,5 +11,5 @@ func InitDB(cfg *config.Config) {
 	baseDB := db.NewBaseDB("mysql")
 	fmt.Println(cfg)
 	baseDB.InitDB(cfg)
-	db.MYSQLDB.AutoMigrate(&User{})
+	db.MYSQLDB.AutoMigrate(&User{}, Module{}, Role{}, UserRole{}, Permission{})
 }
