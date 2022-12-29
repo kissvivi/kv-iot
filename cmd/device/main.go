@@ -32,7 +32,7 @@ to quickly create a Cobra application.`,
 //type Application struct {
 //	name string
 //	version string
-//	httpServer *http.Server
+//	httpServer *rest.Server
 //}
 
 func runServer(cmd *cobra.Command, args []string) {

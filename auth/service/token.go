@@ -1,12 +1,19 @@
 package service
 
 import (
+	"errors"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"kv-iot/auth/data"
 	"kv-iot/config"
 	"strconv"
 	"time"
+)
+
+var (
+	ErrorTokenMalformed   = errors.New("token不可用")
+	ErrorTokenExpired     = errors.New("token过期")
+	ErrorTokenNotValidYet = errors.New("token无效")
 )
 
 // JWTAuth 权限校验接口
@@ -26,12 +33,12 @@ type Claims struct {
 	jwt.StandardClaims
 }
 
-var jwtKey = []byte(config.Application{}.AuthServer.JwtKey)
+var jwtKey = []byte(config.CONFIG.Application.AuthServer.JwtKey)
 
 // GenerateToken 生成授权后的token
 func GenerateToken(user data.User) (string, error) {
 	nowTime := time.Now()
-	expireTime := nowTime.Add(time.Duration(config.Application{}.AuthServer.TokenTimeout) * time.Minute)
+	expireTime := nowTime.Add(time.Duration(config.CONFIG.Application.AuthServer.TokenTimeout) * time.Minute)
 	authCodes := []string{""}
 	claims := Claims{
 		user.UserName,
@@ -39,7 +46,8 @@ func GenerateToken(user data.User) (string, error) {
 		user.IsAdmin(),
 		jwt.StandardClaims{
 			ExpiresAt: expireTime.Unix(),
-			Issuer:    "",
+			NotBefore: time.Now().Unix() - 1000,
+			Issuer:    "kv-iot",
 			Id:        strconv.Itoa(int(user.ID)),
 		},
 	}
@@ -54,6 +62,24 @@ func ParseToken(token string) (*Claims, error) {
 	tokenClaims, err := jwt.ParseWithClaims(token, &Claims{}, func(token *jwt.Token) (interface{}, error) {
 		return jwtKey, nil
 	})
+
+	// https://gowalker.org/github.com/dgrijalva/jwt-go#ValidationError
+	// jwt.ValidationError 是一个无效token的错误结构
+	if ve, ok := err.(*jwt.ValidationError); ok {
+		// ValidationErrorMalformed是一个uint常量，表示token不可用
+		if ve.Errors&jwt.ValidationErrorMalformed != 0 {
+			return nil, ErrorTokenMalformed
+			// ValidationErrorExpired表示Token过期
+		} else if ve.Errors&jwt.ValidationErrorExpired != 0 {
+			return nil, ErrorTokenExpired
+			// ValidationErrorNotValidYet表示无效token
+		} else if ve.Errors&jwt.ValidationErrorNotValidYet != 0 {
+			return nil, ErrorTokenNotValidYet
+		} else {
+			return nil, ErrorTokenMalformed
+		}
+
+	}
 
 	if tokenClaims != nil {
 		if claims, ok := tokenClaims.Claims.(*Claims); ok && tokenClaims.Valid {

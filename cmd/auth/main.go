@@ -6,8 +6,10 @@ import (
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 	"kv-iot/auth/data"
-	v1 "kv-iot/auth/endpoint/http/v1"
-	"kv-iot/auth/endpoint/http/v1/api"
+	"kv-iot/auth/data/repo"
+	v1 "kv-iot/auth/endpoint/rest/v1"
+	"kv-iot/auth/endpoint/rest/v1/api"
+	"kv-iot/auth/service"
 	"kv-iot/config"
 	"log"
 	"net"
@@ -39,6 +41,9 @@ func runServer(cmd *cobra.Command, args []string) {
 	}
 	//初始化DB
 	data.InitDB(cfg)
+
+	//new
+	api.NewBaseApi(api.NewUserApiImpl(service.NewBaseServiceImpl(repo.UserRepo{})))
 
 	engine := v1.InitRouter(api.BaseApi{})
 	s := initServer(cfg, engine)
@@ -100,6 +105,5 @@ func Execute() {
 
 func main() {
 	Execute()
-
 	//println(int(1 << uint(13)) & 12)
 }

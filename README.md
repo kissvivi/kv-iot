@@ -1,12 +1,15 @@
-<h1 align="center">Welcome to kv-iot 👋</h1>
+<h1 align="center">🎊🥂 Welcome to kv-iot 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-0.0.1-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/kissvivi/kv-iot/blob/main/LICENSE" target="_blank">
     <img alt="License: Apache License" src="https://img.shields.io/badge/License-Apache License-yellow.svg" />
   </a>
-  <a href="https://twitter.com/jobsvivi" target="_blank">
-    <img alt="Twitter: jobsvivi" src="https://img.shields.io/twitter/follow/jobsvivi.svg?style=social" />
-  </a>
+
+[//]: # (  <a href="https://twitter.com/jobsvivi" target="_blank">)
+
+[//]: # (    <img alt="Twitter: jobsvivi" src="https://img.shields.io/twitter/follow/jobsvivi.svg?style=social" />)
+
+[//]: # (  </a>)
 </p>
 
 > 云边物联网平台 go语言开发轻部署 可部署到边缘设备也可扩展成物联网平台
@@ -23,13 +26,13 @@
 7. 规则引擎
    1. 规则转发
 
-### ✨ [Demo](127.0.0.1)
+### ✨ [Demo 体验地址 暂无](127.0.0.1)
 
-## Install 如何运行
+## 🪄 Install 如何运行
 ### docker方式
 打包docker镜像
 ```sh
-make all
+make dockers
 ```
 
 运行服务

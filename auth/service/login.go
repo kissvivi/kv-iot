@@ -1,8 +1,13 @@
 package service
 
 import (
+	"errors"
 	"kv-iot/auth/data"
 	"kv-iot/auth/data/repo"
+)
+
+var (
+	ErrLogin = errors.New("用户名或密码错误")
 )
 
 var _ baseService = (*BaseServiceImpl)(nil)
@@ -26,10 +31,11 @@ func (b BaseServiceImpl) Login(user data.User) (err error, token string) {
 	m["user_name"] = user.UserName
 	m["password"] = user.Password
 	err, reUser = b.userRepo.FindBy(m)
-	if err == nil && reUser != nil {
+	if err == nil && len(reUser) > 0 {
 		token, err = GenerateToken(user)
+		return
 	}
-	return
+	return ErrLogin, token
 }
 
 func (b BaseServiceImpl) RegUser(user data.User) (err error, token string) {

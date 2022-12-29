@@ -1,4 +1,4 @@
-FROM golang:1.17.6-alpine AS builder
+FROM golang:1.19-alpine AS builder
 ARG SVC
 
 WORKDIR /kv

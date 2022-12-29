@@ -85,5 +85,8 @@ func InitConfig() (*Config, error) {
 	if err != nil {
 		return nil, err
 	}
+	CONFIG = cfg
 	return &cfg, nil
 }
+
+var CONFIG Config
