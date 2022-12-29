@@ -2,7 +2,7 @@ package v1
 
 import (
 	"github.com/gin-gonic/gin"
-	"kv-iot/rule/api"
+	"kv-iot/rule/endpoint/http/v1/api"
 )
 
 type engine = *gin.Engine

@@ -16,6 +16,7 @@ var (
 
 type AuthRepoI[T any] interface {
 	Add(t T) (err error)
+	Save(t T) (err error)
 	Update(t T) (err error)
 	Delete(t T) (err error)
 	FindOneByID(id int) (err error, result T)

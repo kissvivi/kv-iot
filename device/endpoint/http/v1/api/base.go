@@ -1,6 +1,8 @@
 package api
 
-import "kv-iot/device/api/baseapi"
+import (
+	"kv-iot/device/endpoint/http/v1/api/baseapi"
+)
 
 type BaseApi struct {
 	DeviceApi baseapi.DeviceApi
