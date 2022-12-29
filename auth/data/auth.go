@@ -2,6 +2,7 @@ package data
 
 import (
 	"errors"
+	"fmt"
 	"kv-iot/db"
 	"log"
 )
@@ -19,6 +20,7 @@ type AuthRepoI[T any] interface {
 	Delete(t T) (err error)
 	FindOneByID(id int) (err error, result T)
 	FindAll() (err error, result []T)
+	FindOneBy(col T, value T) (err error, result []T)
 }
 
 func (a AuthRepo[T]) Add(t T) (err error) {
@@ -46,6 +48,29 @@ func (a AuthRepo[T]) FindOneByID(id int) (err error, result T) {
 func (a AuthRepo[T]) FindAll() (err error, result []T) {
 	result = make([]T, 0)
 	err = db.MYSQLDB.Find(&result).Error
+	return
+}
+func (a AuthRepo[T]) FindBy(m map[string]interface{}) (err error, result []T) {
+
+	var (
+		sql       string
+		sqlValues []interface{}
+	)
+	i := 0
+	for name, value := range m {
+		sql += fmt.Sprintf("%s = ?", name)
+		sqlValues = append(sqlValues, value)
+		if i < len(m)-1 {
+			fmt.Println(fmt.Sprintf("%d_%d", len(m), i))
+			sql += " and "
+		}
+		i++
+	}
+
+	fmt.Println(sql)
+	fmt.Println(sqlValues...)
+
+	err = db.MYSQLDB.Where(sql, sqlValues...).Find(&result).Error
 	return
 }
 

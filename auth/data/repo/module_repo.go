@@ -1,9 +1,9 @@
 package repo
 
 import (
-	"gorm.io/gorm"
+	"kv-iot/auth/data"
 )
 
-type ModuleRepo[T any] struct {
-	db *gorm.DB
+type ModuleRepo struct {
+	data.AuthRepo[data.User]
 }
