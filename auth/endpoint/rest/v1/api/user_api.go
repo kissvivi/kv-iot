@@ -15,10 +15,10 @@ type userApi interface {
 }
 
 type UserApiImpl struct {
-	userBaseService service.BaseServiceImpl
+	userBaseService service.BaseService
 }
 
-func NewUserApiImpl(userBaseService *service.BaseServiceImpl) *UserApiImpl {
+func NewUserApiImpl(userBaseService *service.BaseService) *UserApiImpl {
 	return &UserApiImpl{userBaseService: *userBaseService}
 }
 
@@ -26,7 +26,7 @@ func (u UserApiImpl) RegUser(c *gin.Context) {
 	user := data.User{}
 	c.BindJSON(&user)
 
-	err, token := u.userBaseService.RegUser(user)
+	err, token := u.userBaseService.UserService.RegUser(user)
 	if err != nil {
 		rest.BaseResult{}.ErrResult(c, nil, err.Error())
 	}
@@ -37,7 +37,7 @@ func (u UserApiImpl) Login(c *gin.Context) {
 	user := data.User{}
 	c.ShouldBind(&user)
 
-	err, token := u.userBaseService.Login(user)
+	err, token := u.userBaseService.UserService.Login(user)
 	if err != nil {
 		rest.BaseResult{}.ErrResult(c, nil, "用户名或密码错误")
 	} else {

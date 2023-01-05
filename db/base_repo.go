@@ -15,7 +15,7 @@ type BaseRepoI[T any] interface {
 	Delete(t T) (err error)
 	FindOneByID(id int) (err error, result T)
 	FindAll() (err error, result []T)
-	FindOneBy(col T, value T) (err error, result []T)
+	FindBy(col T, value T) (err error, result []T)
 }
 
 type baseRepo[T any] struct{}

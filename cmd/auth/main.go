@@ -42,10 +42,10 @@ func runServer(cmd *cobra.Command, args []string) {
 	//初始化DB
 	data.InitDB(cfg)
 
-	//new
-	api.NewBaseApi(api.NewUserApiImpl(service.NewBaseServiceImpl(repo.UserRepo{})))
+	//new 建立依赖
+	baseApi := api.NewBaseApi(api.NewUserApiImpl(service.NewBaseService(service.NewUserServiceImpl(repo.UserRepo{}), service.NewRoleServiceImpl(repo.RoleRepo{}))))
 
-	engine := v1.InitRouter(api.BaseApi{})
+	engine := v1.InitRouter(baseApi)
 	s := initServer(cfg, engine)
 	//go initGrpcServer()
 	fmt.Println(`

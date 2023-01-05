@@ -20,7 +20,7 @@
 # Go workspace file
 go.work
 
-vendor
+vendor/
 
 workspace.xml
-.idea
+.idea/

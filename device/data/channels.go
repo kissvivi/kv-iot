@@ -16,6 +16,6 @@ func (m *Channels) TableName() string {
 	return "channels"
 }
 
-type ChannelsRepo interface {
-	Add(channels Channels)
-}
+//type ChannelsRepo interface {
+//	Add(channels Channels)
+//}

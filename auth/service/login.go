@@ -10,22 +10,22 @@ var (
 	ErrLogin = errors.New("用户名或密码错误")
 )
 
-var _ baseService = (*BaseServiceImpl)(nil)
+var _ userService = (*UserServiceImpl)(nil)
 
-type baseService interface {
+type userService interface {
 	RegUser(user data.User) (err error, token string)
 	Login(user data.User) (err error, token string)
 }
 
-type BaseServiceImpl struct {
+type UserServiceImpl struct {
 	userRepo repo.UserRepo
 }
 
-func NewBaseServiceImpl(userRepo repo.UserRepo) *BaseServiceImpl {
-	return &BaseServiceImpl{userRepo: userRepo}
+func NewUserServiceImpl(userRepo repo.UserRepo) *UserServiceImpl {
+	return &UserServiceImpl{userRepo: userRepo}
 }
 
-func (b BaseServiceImpl) Login(user data.User) (err error, token string) {
+func (b UserServiceImpl) Login(user data.User) (err error, token string) {
 	var m = make(map[string]interface{}, 0)
 	var reUser []data.User
 	m["user_name"] = user.UserName
@@ -38,7 +38,7 @@ func (b BaseServiceImpl) Login(user data.User) (err error, token string) {
 	return ErrLogin, token
 }
 
-func (b BaseServiceImpl) RegUser(user data.User) (err error, token string) {
+func (b UserServiceImpl) RegUser(user data.User) (err error, token string) {
 	if err = b.userRepo.Add(user); err == nil {
 		token, err = GenerateToken(user)
 	}

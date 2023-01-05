@@ -10,7 +10,7 @@ import (
 
 type engine = *gin.Engine
 
-func InitRouter(api api.BaseApi) engine {
+func InitRouter(api *api.BaseApi) engine {
 	r := gin.New()
 
 	r.Use(gin.Logger())
@@ -27,7 +27,7 @@ func InitRouter(api api.BaseApi) engine {
 	return r
 }
 
-func routers(r *gin.Engine, baseApi api.BaseApi) {
+func routers(r *gin.Engine, baseApi *api.BaseApi) {
 	g := r.Group("")
 	{
 		g.POST("/login", baseApi.UserApi.Login)
