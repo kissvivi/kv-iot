@@ -1,4 +1,4 @@
-package rest
+package result
 
 import "github.com/gin-gonic/gin"
 

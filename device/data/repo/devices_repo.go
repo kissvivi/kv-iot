@@ -5,6 +5,6 @@ import (
 	"kv-iot/device/data"
 )
 
-type ChannelsRepo struct {
-	db.BaseRepoI[data.Channels]
+type DevicesRepo struct {
+	db.BaseRepoI[data.Devices]
 }

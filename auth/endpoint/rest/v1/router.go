@@ -2,9 +2,9 @@ package v1
 
 import (
 	"github.com/gin-gonic/gin"
-	"kv-iot/auth/endpoint/rest"
 	"kv-iot/auth/endpoint/rest/v1/api"
 	"kv-iot/auth/service"
+	"kv-iot/pkg/result"
 	"log"
 )
 
@@ -45,7 +45,7 @@ func JWTAuth() gin.HandlerFunc {
 		// 通过http header中的token解析来认证
 		token := c.Request.Header.Get("token")
 		if token == "" {
-			rest.BaseResult{}.NoTokenResult(c, nil, "请求未携带token，无权限访问")
+			result.BaseResult{}.NoTokenResult(c, nil, "请求未携带token，无权限访问")
 			c.Abort()
 			return
 		}
@@ -58,12 +58,12 @@ func JWTAuth() gin.HandlerFunc {
 		if err != nil {
 			// token过期
 			if err == service.ErrorTokenExpired {
-				rest.BaseResult{}.NoTokenResult(c, nil, "token授权已过期，请重新申请授权")
+				result.BaseResult{}.NoTokenResult(c, nil, "token授权已过期，请重新申请授权")
 				c.Abort()
 				return
 			}
 			// 其他错误
-			rest.BaseResult{}.ErrResult(c, nil, err.Error())
+			result.BaseResult{}.ErrResult(c, nil, err.Error())
 			c.Abort()
 			return
 		}

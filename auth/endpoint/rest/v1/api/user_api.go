@@ -3,8 +3,8 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"kv-iot/auth/data"
-	"kv-iot/auth/endpoint/rest"
 	"kv-iot/auth/service"
+	"kv-iot/pkg/result"
 )
 
 var _ userApi = (*UserApiImpl)(nil)
@@ -28,9 +28,9 @@ func (u UserApiImpl) RegUser(c *gin.Context) {
 
 	err, token := u.userBaseService.UserService.RegUser(user)
 	if err != nil {
-		rest.BaseResult{}.ErrResult(c, nil, err.Error())
+		result.BaseResult{}.ErrResult(c, nil, err.Error())
 	}
-	rest.BaseResult{}.SuccessResult(c, token, "注册成功")
+	result.BaseResult{}.SuccessResult(c, token, "注册成功")
 }
 
 func (u UserApiImpl) Login(c *gin.Context) {
@@ -39,9 +39,9 @@ func (u UserApiImpl) Login(c *gin.Context) {
 
 	err, token := u.userBaseService.UserService.Login(user)
 	if err != nil {
-		rest.BaseResult{}.ErrResult(c, nil, "用户名或密码错误")
+		result.BaseResult{}.ErrResult(c, nil, "用户名或密码错误")
 	} else {
-		rest.BaseResult{}.SuccessResult(c, token, "登录成功")
+		result.BaseResult{}.SuccessResult(c, token, "登录成功")
 	}
 
 }
