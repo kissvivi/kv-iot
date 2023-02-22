@@ -1,3 +1,7 @@
+# github.com/deepmap/oapi-codegen v1.8.2
+## explicit; go 1.14
+github.com/deepmap/oapi-codegen/pkg/runtime
+github.com/deepmap/oapi-codegen/pkg/types
 # github.com/dgrijalva/jwt-go v3.2.0+incompatible
 ## explicit
 github.com/dgrijalva/jwt-go
@@ -68,6 +72,22 @@ github.com/hashicorp/hcl/json/token
 # github.com/inconshreveable/mousetrap v1.0.1
 ## explicit; go 1.18
 github.com/inconshreveable/mousetrap
+# github.com/influxdata/influxdb-client-go/v2 v2.12.2
+## explicit; go 1.17
+github.com/influxdata/influxdb-client-go/v2
+github.com/influxdata/influxdb-client-go/v2/api
+github.com/influxdata/influxdb-client-go/v2/api/http
+github.com/influxdata/influxdb-client-go/v2/api/query
+github.com/influxdata/influxdb-client-go/v2/api/write
+github.com/influxdata/influxdb-client-go/v2/domain
+github.com/influxdata/influxdb-client-go/v2/internal/gzip
+github.com/influxdata/influxdb-client-go/v2/internal/http
+github.com/influxdata/influxdb-client-go/v2/internal/log
+github.com/influxdata/influxdb-client-go/v2/internal/write
+github.com/influxdata/influxdb-client-go/v2/log
+# github.com/influxdata/line-protocol v0.0.0-20200327222509-2487e7298839
+## explicit; go 1.13
+github.com/influxdata/line-protocol
 # github.com/jinzhu/inflection v1.0.0
 ## explicit
 github.com/jinzhu/inflection
@@ -105,6 +125,9 @@ github.com/pelletier/go-toml/v2/internal/characters
 github.com/pelletier/go-toml/v2/internal/danger
 github.com/pelletier/go-toml/v2/internal/tracker
 github.com/pelletier/go-toml/v2/unstable
+# github.com/pkg/errors v0.9.1
+## explicit
+github.com/pkg/errors
 # github.com/robertkrimen/otto v0.2.1
 ## explicit; go 1.18
 github.com/robertkrimen/otto
@@ -148,6 +171,21 @@ github.com/subosito/gotenv
 # github.com/ugorji/go/codec v1.2.7
 ## explicit; go 1.11
 github.com/ugorji/go/codec
+# go.uber.org/atomic v1.10.0
+## explicit; go 1.18
+go.uber.org/atomic
+# go.uber.org/multierr v1.9.0
+## explicit; go 1.19
+go.uber.org/multierr
+# go.uber.org/zap v1.24.0
+## explicit; go 1.19
+go.uber.org/zap
+go.uber.org/zap/buffer
+go.uber.org/zap/internal
+go.uber.org/zap/internal/bufferpool
+go.uber.org/zap/internal/color
+go.uber.org/zap/internal/exit
+go.uber.org/zap/zapcore
 # golang.org/x/crypto v0.0.0-20220525230936-793ad666bf5e
 ## explicit; go 1.17
 golang.org/x/crypto/sha3
@@ -161,6 +199,7 @@ golang.org/x/net/idna
 golang.org/x/net/internal/socks
 golang.org/x/net/internal/timeseries
 golang.org/x/net/proxy
+golang.org/x/net/publicsuffix
 golang.org/x/net/trace
 # golang.org/x/sync v0.1.0
 ## explicit

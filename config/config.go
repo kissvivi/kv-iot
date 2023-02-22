@@ -10,8 +10,8 @@ type Config struct {
 }
 
 type Application struct {
-	DeviceServer DeviceServer `json:"deviceserver"`
-	AuthServer   AuthServer   `json:"authserver"`
+	DeviceServer DeviceServer `json:"device_server"`
+	AuthServer   AuthServer   `json:"auth_server"`
 }
 
 type DeviceServer struct {
@@ -23,15 +23,15 @@ type AuthServer struct {
 	Version      string     `json:"version"`
 	HttpServer   HttpServer `json:"httpserver"`
 	JwtKey       string     `json:"jwt_key"`
-	TokenTimeout int64      `json:"tokentimeout"`
+	TokenTimeout int64      `json:"token_timeout"`
 }
 
 type HttpServer struct {
 	Host         string `json:"host"`
 	Port         string `json:"port"`
 	Mode         string `json:"mode"`
-	Readtimeout  int    `json:"readtimeout"` //单位分钟
-	Writetimeout int    `json:"writetimeout"`
+	ReadTimeout  int    `json:"read_timeout"` //单位分钟
+	WriteTimeout int    `json:"write_timeout"`
 }
 
 type Mysql struct {
@@ -75,7 +75,7 @@ func InitConfig() (*Config, error) {
 
 	//v.AddConfigPath(".")
 	//v.SetConfigName("config")
-	v.SetConfigFile("config/config.yml")
+	v.SetConfigFile("config.yml")
 	err := v.ReadInConfig()
 	if err != nil {
 		return nil, err

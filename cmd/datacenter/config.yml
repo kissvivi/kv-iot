@@ -1,0 +1,25 @@
+application:
+  device_server:
+    version: 1.0.0
+    httpserver:
+      host: 0.0.0.0
+      port: 8100
+      mode: dev
+      read_timeout: 5
+      write_timeout: 5
+  auth_server:
+    version: 1.0.0
+    httpserver:
+      host: 0.0.0.0
+      port: 8101
+      mode: dev
+      read_timeout: 5
+      write_timeout: 5
+    jwt_key: kvkvkvkvkv
+    token_timeout: 60
+datasource:
+  mysql:
+    url: 172.22.103.29:3306
+    username: admin
+    password: admin
+    dbname: kv-iot

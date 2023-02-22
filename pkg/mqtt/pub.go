@@ -8,7 +8,7 @@ import (
 func (m Mqtt) Pub(qos int, topic string, text string) {
 	token := m.Conn.Publish(topic, byte(qos), false, text)
 	token.Wait()
-	fmt.Printf("Pub to topic %s", topic)
+	fmt.Printf("Pub to topic %s,msg:%v\n", topic, text)
 }
 
 // 全局pub消息处理

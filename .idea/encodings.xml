@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/datacenter/service/center/complexsyncqueue" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/datacenter/service/center/complexsyncqueue.go" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/datacenter/service/center/complexsyncqueue_test.go" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/datacenter/service/center/complexsyncqueueitem.go" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/datacenter/service/center/complexsyncqueueitemproperty.go" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/datacenter/service/center/syncqueue" charset="GBK" />
+  </component>
+</project>

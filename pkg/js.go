@@ -33,11 +33,11 @@ func executeJS(script string, vars map[string]interface{}) (out interface{}, err
 	vm.Interrupt = make(chan func(), 1)
 	vm.SetStackDepthLimit(32)
 
-	for k, v := range vars {
-		if err := vm.Set(k, v); err != nil {
-			return nil, errors.New(err.Error() + "set variable error")
-		}
-	}
+	//for k, v := range vars {
+	//	if err := vm.Set(k, v); err != nil {
+	//		return nil, errors.New(err.Error() + "set variable error")
+	//	}
+	//}
 
 	go func() {
 		time.Sleep(maxExecutionTime)

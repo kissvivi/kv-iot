@@ -6,10 +6,11 @@ import (
 )
 
 // 订阅来的消息
-var _SubData = make(chan []byte, 100)
+var SubData = make(chan interface{}, 100)
 var messageSubHandler MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	fmt.Printf("Received message: %s from topic: %s\n", msg.Payload(), msg.Topic())
-	_SubData <- msg.Payload()
+	//syncqueue.New().Enqueue(msg)
+	SubData <- msg
 }
 
 func (m Mqtt) Sub(qos int, topic string) {
