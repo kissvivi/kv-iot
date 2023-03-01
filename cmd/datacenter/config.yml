@@ -23,3 +23,11 @@ datasource:
     username: admin
     password: admin
     dbname: kv-iot
+  influx:
+    url: 172.22.103.29:3306
+#    username: admin
+#    password: admin
+    dbname: kv-iot
+    token: ""
+mqtt:
+

@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	"kv-iot/datacenter/service/mq"
+	"kv-iot/datacenter/service/mqttchan"
 	"os"
 )
 
@@ -25,13 +25,23 @@ var rootCmd = &cobra.Command{
 
 var serverCmd = &cobra.Command{
 	Use:   "run",
-	Short: "kv-iot",
-	Long:  `kv-iot`,
+	Short: "此命令为运行一个dataCenter服务，监听数据并转发数据",
+	Long:  `-mqtt表示使用mqtt监听`,
 	Run:   ssub,
 }
 
 func ssub(cmd *cobra.Command, args []string) {
-	mq.SSub()
+	mc := mqttchan.NewDeviceChanMqtt()
+	// 获取设备数据 步骤
+	// 1.建立数据通道
+	// 2.认证设备是否合规
+	// 3.注册设备
+	// 4.改变设备状态
+	// 5.注销设备
+	mc.Create()
+	mc.AuthDevice()
+	mc.RegDevice()
+	mc.StateDevice()
 }
 
 func Execute() {
@@ -43,5 +53,5 @@ func Execute() {
 func main() {
 	rootCmd.AddCommand(serverCmd)
 	Execute()
-	//mq.SSub()
+	//mqttchan.SSub()
 }
