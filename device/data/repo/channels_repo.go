@@ -6,5 +6,5 @@ import (
 )
 
 type ChannelsRepo struct {
-	db.BaseRepoI[data.Channels]
+	db.BaseRepo[data.Channels]
 }

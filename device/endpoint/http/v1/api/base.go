@@ -5,9 +5,9 @@ import (
 )
 
 type BaseApi struct {
-	DeviceApi baseapi.DeviceApi
+	DeviceApi *baseapi.DeviceApi
 }
 
-func NewBaseApi() *BaseApi {
-	return &BaseApi{}
+func NewBaseApi(deviceApi *baseapi.DeviceApi) *BaseApi {
+	return &BaseApi{DeviceApi: deviceApi}
 }

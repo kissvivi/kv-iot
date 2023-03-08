@@ -16,6 +16,10 @@ type DevicesServiceImpl struct {
 	devices repo.DevicesRepo
 }
 
+func NewDevicesServiceImpl(devices repo.DevicesRepo) *DevicesServiceImpl {
+	return &DevicesServiceImpl{devices: devices}
+}
+
 func (d DevicesServiceImpl) AddDevices(devices data.Devices) (err error) {
 	return d.devices.Add(devices)
 }

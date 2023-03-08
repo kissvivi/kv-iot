@@ -29,7 +29,7 @@ clean:
 	rm -rf ${BUILD_DIR}
 
 cleandocker:
-	# Stops containers and removes containers, networks, volumes, and images created by up
+	# Stops containers and removes containers, networks, volumes, and static created by up
 	docker-compose -f docker/docker-compose.yml down --rmi all -v --remove-orphans
 
 ifdef pv

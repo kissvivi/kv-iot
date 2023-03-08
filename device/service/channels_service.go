@@ -16,6 +16,10 @@ type ChannelsServiceImpl struct {
 	channels repo.ChannelsRepo
 }
 
+func NewChannelsServiceImpl(channels repo.ChannelsRepo) *ChannelsServiceImpl {
+	return &ChannelsServiceImpl{channels: channels}
+}
+
 func (c ChannelsServiceImpl) AddChannels(channels data.Channels) (err error) {
 	//TODO implement me
 	panic("implement me")

@@ -7,8 +7,11 @@ import (
 	"google.golang.org/grpc"
 	"kv-iot/config"
 	"kv-iot/device/data"
+	"kv-iot/device/data/repo"
 	v1 "kv-iot/device/endpoint/http/v1"
 	"kv-iot/device/endpoint/http/v1/api"
+	"kv-iot/device/endpoint/http/v1/api/baseapi"
+	"kv-iot/device/service"
 	"log"
 	"net"
 	"net/http"
@@ -40,8 +43,19 @@ func runServer(cmd *cobra.Command, args []string) {
 	}
 	//初始化DB
 	data.InitDB(cfg)
+	//new 建立依赖
+	//service实现
+	channimpl := service.NewChannelsServiceImpl(repo.ChannelsRepo{})
+	deviceImpl := service.NewDevicesServiceImpl(repo.DevicesRepo{})
+	kvactionImpl := service.NewKvActionServiceImpl(repo.KvActionRepo{})
+	kveventImpl := service.NewKvEventServiceImpl(repo.KvEventRepo{})
+	kvpropetyImpl := service.NewKvPropertyServiceImpl(repo.KvPropertyRepo{})
+	productsImpl := service.NewProductsServiceImpl(repo.ProductsRepo{})
+	//base service
+	baseService := service.NewBaseService(channimpl, deviceImpl, kvactionImpl, kveventImpl, kvpropetyImpl, productsImpl)
+	baseApi := api.NewBaseApi(baseapi.NewDeviceApi(baseService))
 
-	engine := v1.InitRouter(api.BaseApi{})
+	engine := v1.InitRouter(baseApi)
 	s := initServer(cfg, engine)
 	go initGrpcServer()
 	fmt.Println(`
@@ -58,7 +72,7 @@ func runServer(cmd *cobra.Command, args []string) {
 	 	服务版本 : %v 
 	 	服务运行地址 : %v
 	`, cfg.Application.DeviceServer.Version, s.Addr)
-
+	fmt.Printf("%+v\n", cfg)
 	err = s.ListenAndServe()
 	if err != nil {
 		return

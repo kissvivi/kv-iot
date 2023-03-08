@@ -5,6 +5,6 @@ import (
 	"kv-iot/device/data"
 )
 
-type KvProperty struct {
-	db.BaseRepoI[data.KvProperty]
+type KvPropertyRepo struct {
+	db.BaseRepo[data.KvProperty]
 }

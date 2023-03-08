@@ -1,0 +1,41 @@
+{
+  "application": {
+    "deviceServer": {
+      "version": "0.0.2",
+      "httpserver": {
+        "host": "0.0.0.0",
+        "port": 8100,
+        "mode": "dev",
+        "readTimeout": 5,
+        "writeTimeout": 5
+      }
+    },
+    "authServer": {
+      "version": "0.0.2",
+      "httpserver": {
+        "host": "0.0.0.0",
+        "port": 8101,
+        "mode": "dev",
+        "readTimeout": 5,
+        "writeTimeout": 5
+      }
+    }
+  },
+  "datasource":{
+    "mysql":{
+      "url": "172.19.17.116:3306",
+      "username": "admin",
+      "password": "admin",
+      "dbname": "kv-iot"
+    },
+
+    "influx":{
+      "url": "172.19.17.116:3306",
+      "username": "admin",
+      "password": "admin",
+      "dbname": "kv-iot",
+      "token": ""
+    }
+  }
+
+}

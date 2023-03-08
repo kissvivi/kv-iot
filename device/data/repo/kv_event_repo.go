@@ -6,5 +6,5 @@ import (
 )
 
 type KvEventRepo struct {
-	db.BaseRepoI[data.KvEvent]
+	db.BaseRepo[data.KvEvent]
 }

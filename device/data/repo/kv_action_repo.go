@@ -6,5 +6,5 @@ import (
 )
 
 type KvActionRepo struct {
-	db.BaseRepoI[data.KvAction]
+	db.BaseRepo[data.KvAction]
 }

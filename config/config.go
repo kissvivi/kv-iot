@@ -1,6 +1,8 @@
 package config
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/spf13/viper"
 )
 
@@ -10,8 +12,8 @@ type Config struct {
 }
 
 type Application struct {
-	DeviceServer DeviceServer `json:"device_server"`
-	AuthServer   AuthServer   `json:"auth_server"`
+	DeviceServer DeviceServer `json:"deviceServer"`
+	AuthServer   AuthServer   `json:"authServer"`
 }
 
 type DeviceServer struct {
@@ -22,16 +24,16 @@ type DeviceServer struct {
 type AuthServer struct {
 	Version      string     `json:"version"`
 	HttpServer   HttpServer `json:"httpserver"`
-	JwtKey       string     `json:"jwt_key"`
-	TokenTimeout int64      `json:"token_timeout"`
+	JwtKey       string     `json:"jwtKey"`
+	TokenTimeout int64      `json:"tokenTimeout"`
 }
 
 type HttpServer struct {
 	Host         string `json:"host"`
 	Port         string `json:"port"`
 	Mode         string `json:"mode"`
-	ReadTimeout  int    `json:"read_timeout"` //单位分钟
-	WriteTimeout int    `json:"write_timeout"`
+	ReadTimeout  int    `json:"readTimeout"` //单位分钟
+	WriteTimeout int    `json:"writeTimeout"`
 }
 
 type Mysql struct {
@@ -75,13 +77,17 @@ func InitConfig() (*Config, error) {
 
 	//v.AddConfigPath(".")
 	//v.SetConfigName("config")
-	v.SetConfigFile("config.yml")
+	//v.SetConfigType("json")
+	v.SetConfigFile("config.json")
+	//v.SetConfigFile("config.yaml")
 	err := v.ReadInConfig()
 	if err != nil {
 		return nil, err
 	}
 	var cfg Config
 	err = v.Unmarshal(&cfg)
+	ss, _ := json.Marshal(cfg)
+	fmt.Println(string(ss))
 	if err != nil {
 		return nil, err
 	}

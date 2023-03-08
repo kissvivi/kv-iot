@@ -17,8 +17,8 @@ type BaseRepoI[T any] interface {
 	FindAll() (err error, result []T)
 	FindBy(col T, value T) (err error, result []T)
 }
-
-type baseRepo[T any] struct{}
+type BaseRepo[T any] struct {
+}
 
 // Add
 //
@@ -26,11 +26,12 @@ type baseRepo[T any] struct{}
 //	@receiver baseRepo[T]
 //	@param t 实体类
 //	@return err
-func (baseRepo[T]) Add(t T) (err error) {
+func (BaseRepo[T]) Add(t T) (err error) {
 	log.Println(t)
 	err = MYSQLDB.Create(&t).Error
 	if err != nil {
 		log.Println(err)
+		return
 	}
 	return
 }
@@ -41,8 +42,13 @@ func (baseRepo[T]) Add(t T) (err error) {
 //	@receiver baseRepo[T]
 //	@param t 实体类
 //	@return err
-func (baseRepo[T]) Update(t T) (err error) {
-	return MYSQLDB.Updates(&t).Error
+func (BaseRepo[T]) Update(t T) (err error) {
+	err = MYSQLDB.Updates(&t).Error
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	return
 }
 
 // Delete
@@ -51,8 +57,13 @@ func (baseRepo[T]) Update(t T) (err error) {
 //	@receiver baseRepo[T]
 //	@param t 实体类
 //	@return err
-func (baseRepo[T]) Delete(t T) (err error) {
-	return MYSQLDB.Delete(&t).Error
+func (BaseRepo[T]) Delete(t T) (err error) {
+	err = MYSQLDB.Delete(&t).Error
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	return
 }
 
 // FindOneByID
@@ -62,8 +73,12 @@ func (baseRepo[T]) Delete(t T) (err error) {
 //	@param id
 //	@return err
 //	@return result 查询结果/结构体
-func (baseRepo[T]) FindOneByID(id int) (err error, result T) {
+func (BaseRepo[T]) FindOneByID(id int) (err error, result T) {
 	err = MYSQLDB.Where("id", id).First(&result).Error
+	if err != nil {
+		log.Println(err)
+		return
+	}
 	return
 }
 
@@ -73,9 +88,13 @@ func (baseRepo[T]) FindOneByID(id int) (err error, result T) {
 //	@receiver baseRepo[T]
 //	@return err
 //	@return []result 返回实体列表
-func (baseRepo[T]) FindAll() (err error, result []T) {
+func (BaseRepo[T]) FindAll() (err error, result []T) {
 	result = make([]T, 0)
 	err = MYSQLDB.Find(&result).Error
+	if err != nil {
+		log.Println(err)
+		return
+	}
 	return
 }
 
@@ -86,7 +105,7 @@ func (baseRepo[T]) FindAll() (err error, result []T) {
 //	@param m 字段键值对
 //	@return err
 //	@return []result 返回实体列表
-func (baseRepo[T]) FindBy(m map[string]interface{}) (err error, result []T) {
+func (BaseRepo[T]) FindBy(m map[string]interface{}) (err error, result []T) {
 	var (
 		sql       string
 		sqlValues []interface{}
@@ -102,5 +121,9 @@ func (baseRepo[T]) FindBy(m map[string]interface{}) (err error, result []T) {
 		i++
 	}
 	err = MYSQLDB.Where(sql, sqlValues...).Find(&result).Error
+	if err != nil {
+		log.Println(err)
+		return
+	}
 	return
 }

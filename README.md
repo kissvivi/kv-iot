@@ -26,7 +26,7 @@
 7. 规则引擎
    1. 规则转发
 8. 通讯工具
-   1. mqtt broker 
+   1. mqtt broker
    2. tcp server client
    3. modbusTcp server client
    4. lora server
@@ -36,6 +36,9 @@
 * 2023/03-2023/04 着重开发通用通讯通道，即适用平台的MQTT通讯，目标可正常接入平台
 
 ### ✨ [Demo 体验地址 暂无](127.0.0.1)
+
+### 前端开源地址
+* https://github.com/kissvivi/kv-iot-web.git
 ### ✨ InfluxDB数据接入
 
 ## 🪄 Install 如何运行
@@ -77,6 +80,14 @@ make run
 - endpoint层 -> 数据暴露层
 - service层 -> 业务逻辑层
 
+
+### 关于我们
+* 本物联网平台是综合调研阿里云物联平台/移动ONE-NET物联平台/IotDc3/JetLinks/ChirpStack等
+* 以及工业物联网实际场景综合考虑设计，目前项目属于起步状态，远没有达到生产环境标准
+* 希望更多人能一起交流物联网开发技术
+* QQ交流群：442183314
+
+
 ## Author
 
 👤 **jobs_vivi**
@@ -87,6 +98,11 @@ make run
 ## Show your support
 
 Give a ⭐️ if this project helped you!
+
+## Thanks 感谢赞助
+<a href="https://jb.gg/OpenSourceSupport">
+<img  src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" width="10%">
+</a>
 
 ## 📝 License
 

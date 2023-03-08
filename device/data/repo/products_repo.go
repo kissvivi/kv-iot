@@ -5,6 +5,6 @@ import (
 	"kv-iot/device/data"
 )
 
-type Products struct {
-	db.BaseRepoI[data.Products]
+type ProductsRepo struct {
+	db.BaseRepo[data.Products]
 }

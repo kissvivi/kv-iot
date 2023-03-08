@@ -57,6 +57,7 @@ func runServer(cmd *cobra.Command, args []string) {
 	 	服务版本 : %v 
 	 	服务运行地址 : %v
 	`, cfg.Application.AuthServer.Version, s.Addr)
+	fmt.Println()
 
 	err = s.ListenAndServe()
 	if err != nil {

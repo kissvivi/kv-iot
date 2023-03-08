@@ -21,6 +21,10 @@ func InitRouter(api *api.BaseApi) engine {
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{"message": "pong this is kv-iot auth endpoint"})
 	})
+	r.LoadHTMLGlob("static/*")
+	r.GET("", func(c *gin.Context) {
+		c.HTML(200, "main.html", nil)
+	})
 
 	routers(r, api)
 
