@@ -8,8 +8,10 @@ import (
 var _ KvPropertyService = (*KvPropertyServiceImpl)(nil)
 
 type KvPropertyService interface {
-	AddKvProperty(kvProperty data.KvProperty) (err error)
-	DelKvProperty(kvProperty data.KvProperty) (err error)
+	AddKvProperty(property data.KvProperty) (err error)
+	DelKvProperty(property data.KvProperty) (err error)
+	GetKvProperty(property data.KvProperty) (err error, propertyList []data.KvProperty)
+	GetAllKvProperty() (err error, propertyList []data.KvProperty)
 }
 
 type KvPropertyServiceImpl struct {
@@ -20,10 +22,20 @@ func NewKvPropertyServiceImpl(property repo.KvPropertyRepo) *KvPropertyServiceIm
 	return &KvPropertyServiceImpl{property: property}
 }
 
-func (a KvPropertyServiceImpl) AddKvProperty(kvProperty data.KvProperty) (err error) {
-	return a.property.Add(kvProperty)
+func (kp KvPropertyServiceImpl) AddKvProperty(property data.KvProperty) (err error) {
+	return kp.property.Add(property)
 }
 
-func (a KvPropertyServiceImpl) DelKvProperty(kvProperty data.KvProperty) (err error) {
-	return a.property.Delete(kvProperty)
+func (kp KvPropertyServiceImpl) DelKvProperty(property data.KvProperty) (err error) {
+	return kp.property.Delete(property)
+}
+
+func (kp KvPropertyServiceImpl) GetAllKvProperty() (err error, deviceList []data.KvProperty) {
+	err, deviceList = kp.property.FindAll()
+	return
+}
+
+func (kp KvPropertyServiceImpl) GetKvProperty(property data.KvProperty) (err error, deviceList []data.KvProperty) {
+	err, deviceList = kp.property.FindByStruct(property)
+	return
 }

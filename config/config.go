@@ -45,6 +45,18 @@ type Mysql struct {
 	Dbname   string `json:"dbname"`
 }
 
+type Influx struct {
+	//Host     string `json:"host"`
+	//Port     string `json:"port"`
+	Url      string `json:"url"`
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Auth     string `json:"dbname"`
+	Org      string `json:"org"`
+	Token    string `json:"token"`
+	Bucket   string `json:"bucket"`
+}
+
 type Redis struct {
 	//Host     string `json:"host"`
 	//Port     string `json:"port"`
@@ -55,8 +67,9 @@ type Redis struct {
 }
 
 type Datasource struct {
-	Mysql Mysql `json:"mysql"`
-	Redis Redis `json:"redis"`
+	Mysql  Mysql  `json:"mysql"`
+	Redis  Redis  `json:"redis"`
+	Influx Influx `json:"influx"`
 
 	//Host     string `json:"host"`
 	//Port     string `json:"port"`
@@ -78,8 +91,8 @@ func InitConfig() (*Config, error) {
 	//v.AddConfigPath(".")
 	//v.SetConfigName("config")
 	//v.SetConfigType("json")
-	v.SetConfigFile("config.json")
-	//v.SetConfigFile("config.yaml")
+	//v.SetConfigFile("config.json")
+	v.SetConfigFile("config.yaml")
 	err := v.ReadInConfig()
 	if err != nil {
 		return nil, err

@@ -4,6 +4,7 @@ package data
 type KvMsg struct {
 	ChannelID  string      `json:"channel_id"`  // 产品通讯通道id
 	ProductKey interface{} `json:"product_key"` // 产品标识
+	Device     Device      `json:"device"`
 	Property   Property    `json:"property"`
 	Action     Action      `json:"action"`
 	Event      Event       `json:"event"`
@@ -28,4 +29,10 @@ type Action struct {
 type Event struct {
 	Name       string `json:"name"`       // 事件名称
 	Identifier string `json:"identifier"` // 事件标识符
+}
+
+type Device struct {
+	ProductKey interface{} `json:"product_key"`
+	Name       string      `json:"name"` // 设备名称
+	DeviceNo   string      `json:"device_no"`
 }

@@ -8,8 +8,10 @@ import (
 var _ KvEventService = (*KvEventServiceImpl)(nil)
 
 type KvEventService interface {
-	AddKvEvent(kvEvent data.KvEvent) (err error)
-	DelKvEvent(kvEvent data.KvEvent) (err error)
+	AddKvEvent(event data.KvEvent) (err error)
+	DelKvEvent(event data.KvEvent) (err error)
+	GetKvEvent(event data.KvEvent) (err error, eventList []data.KvEvent)
+	GetAllKvEvent() (err error, eventList []data.KvEvent)
 }
 
 type KvEventServiceImpl struct {
@@ -20,10 +22,20 @@ func NewKvEventServiceImpl(event repo.KvEventRepo) *KvEventServiceImpl {
 	return &KvEventServiceImpl{event: event}
 }
 
-func (a KvEventServiceImpl) AddKvEvent(kvEvent data.KvEvent) (err error) {
-	return a.event.Add(kvEvent)
+func (ke KvEventServiceImpl) AddKvEvent(event data.KvEvent) (err error) {
+	return ke.event.Add(event)
 }
 
-func (a KvEventServiceImpl) DelKvEvent(kvEvent data.KvEvent) (err error) {
-	return a.event.Delete(kvEvent)
+func (ke KvEventServiceImpl) DelKvEvent(event data.KvEvent) (err error) {
+	return ke.event.Delete(event)
+}
+
+func (ke KvEventServiceImpl) GetAllKvEvent() (err error, deviceList []data.KvEvent) {
+	err, deviceList = ke.event.FindAll()
+	return
+}
+
+func (ke KvEventServiceImpl) GetKvEvent(event data.KvEvent) (err error, deviceList []data.KvEvent) {
+	err, deviceList = ke.event.FindByStruct(event)
+	return
 }

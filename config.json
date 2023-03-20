@@ -23,18 +23,19 @@
   },
   "datasource":{
     "mysql":{
-      "url": "172.19.17.116:3306",
+      "url": "172.18.61.43:3306",
       "username": "admin",
       "password": "admin",
       "dbname": "kv-iot"
     },
 
     "influx":{
-      "url": "172.19.17.116:3306",
+      "url": "172.18.61.43:3306",
       "username": "admin",
       "password": "admin",
-      "dbname": "kv-iot",
-      "token": ""
+      "org": "kv-iot",
+      "bucket": "kv-iot-bucket",
+      "token": "WqKMMmXViZ_w8msji4J-vY9asCWkwYQhFX6cK9UlDDCB6JdB6tWLuK7-hTVVRnBRmw0CRPS3b3iBtHKOLPVNMg=="
     }
   }
 

@@ -10,6 +10,8 @@ var _ channelsService = (*ChannelsServiceImpl)(nil)
 type channelsService interface {
 	AddChannels(channels data.Channels) (err error)
 	DelChannels(channels data.Channels) (err error)
+	GetChannels(channels data.Channels) (err error, channelsList []data.Channels)
+	GetAllChannels() (err error, channelsList []data.Channels)
 }
 
 type ChannelsServiceImpl struct {
@@ -21,11 +23,19 @@ func NewChannelsServiceImpl(channels repo.ChannelsRepo) *ChannelsServiceImpl {
 }
 
 func (c ChannelsServiceImpl) AddChannels(channels data.Channels) (err error) {
-	//TODO implement me
-	panic("implement me")
+	return c.channels.Add(channels)
 }
 
 func (c ChannelsServiceImpl) DelChannels(channels data.Channels) (err error) {
-	//TODO implement me
-	panic("implement me")
+	return c.channels.Delete(channels)
+}
+
+func (c ChannelsServiceImpl) GetAllChannels() (err error, channelsList []data.Channels) {
+	err, channelsList = c.channels.FindAll()
+	return
+}
+
+func (c ChannelsServiceImpl) GetChannels(channels data.Channels) (err error, channelsList []data.Channels) {
+	err, channelsList = c.channels.FindByStruct(channels)
+	return
 }

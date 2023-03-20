@@ -28,8 +28,18 @@ func InitRouter(api *api.BaseApi) engine {
 }
 
 func routers(r *gin.Engine, baseApi *api.BaseApi) {
-	g := r.Group("/device")
+	deviceGroup := r.Group("/device")
 	{
-		g.POST("", baseApi.DeviceApi.CreateDevice)
+		deviceGroup.POST("", baseApi.ApiDevice.CreateDevice)
+		deviceGroup.GET("", baseApi.ApiDevice.GetAllDevice)
+		deviceGroup.GET("/by", baseApi.ApiDevice.GetDevice)
+		deviceGroup.DELETE("", baseApi.ApiDevice.DelDevice)
+	}
+	productGroup := r.Group("/product")
+	{
+		productGroup.POST("", baseApi.ApiProduct.CreateProduct)
+		productGroup.GET("", baseApi.ApiProduct.GetAllProduct)
+		productGroup.GET("/by", baseApi.ApiProduct.GetProduct)
+		productGroup.DELETE("", baseApi.ApiProduct.DelProduct)
 	}
 }

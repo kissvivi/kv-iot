@@ -1,13 +1,15 @@
 package api
 
 import (
-	"kv-iot/device/endpoint/http/v1/api/baseapi"
+	"kv-iot/device/endpoint/http/v1/api/device"
+	"kv-iot/device/endpoint/http/v1/api/product"
 )
 
 type BaseApi struct {
-	DeviceApi *baseapi.DeviceApi
+	ApiDevice  *device.ApiDevice
+	ApiProduct *product.ApiProduct
 }
 
-func NewBaseApi(deviceApi *baseapi.DeviceApi) *BaseApi {
-	return &BaseApi{DeviceApi: deviceApi}
+func NewBaseApi(apiDevice *device.ApiDevice, apiProduct *product.ApiProduct) *BaseApi {
+	return &BaseApi{ApiDevice: apiDevice, ApiProduct: apiProduct}
 }

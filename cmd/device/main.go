@@ -10,7 +10,8 @@ import (
 	"kv-iot/device/data/repo"
 	v1 "kv-iot/device/endpoint/http/v1"
 	"kv-iot/device/endpoint/http/v1/api"
-	"kv-iot/device/endpoint/http/v1/api/baseapi"
+	"kv-iot/device/endpoint/http/v1/api/device"
+	"kv-iot/device/endpoint/http/v1/api/product"
 	"kv-iot/device/service"
 	"log"
 	"net"
@@ -53,7 +54,7 @@ func runServer(cmd *cobra.Command, args []string) {
 	productsImpl := service.NewProductsServiceImpl(repo.ProductsRepo{})
 	//base service
 	baseService := service.NewBaseService(channimpl, deviceImpl, kvactionImpl, kveventImpl, kvpropetyImpl, productsImpl)
-	baseApi := api.NewBaseApi(baseapi.NewDeviceApi(baseService))
+	baseApi := api.NewBaseApi(device.NewApiDevice(baseService), product.NewApiProduct(baseService))
 
 	engine := v1.InitRouter(baseApi)
 	s := initServer(cfg, engine)

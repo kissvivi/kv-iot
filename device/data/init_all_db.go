@@ -11,5 +11,5 @@ func InitDB(cfg *config.Config) {
 	baseDB := db.NewBaseDB("mysql")
 	fmt.Println(cfg)
 	baseDB.InitDB(cfg)
-	db.MYSQLDB.AutoMigrate(Channels{}, Devices{}, KvAction{}, KvEvent{}, KvProperty{}, KvProperty{})
+	db.MYSQLDB.AutoMigrate(Channels{}, Products{}, Devices{}, KvAction{}, KvEvent{}, KvProperty{}, KvProperty{})
 }
