@@ -1,0 +1,41 @@
+package service
+
+import (
+	"kv-iot/device/data"
+	"kv-iot/device/data/repo"
+)
+
+var _ {{InterfaceName}} = (*{{StructName}}Impl)(nil)
+
+type {{InterfaceName}} interface {
+	Add{{StructName}}({{VarName}} data.{{StructName}}) (err error)
+	Del{{StructName}}({{VarName}} data.{{StructName}}) (err error)
+	Get{{StructName}}({{VarName}} data.{{StructName}}) (err error, {{VarName}}List []data.{{StructName}})
+	GetAll{{StructName}}() (err error, {{VarName}}List []data.{{StructName}})
+}
+
+type {{StructName}}Impl struct {
+	{{RepoName}} repo.{{StructName}}Repo
+}
+
+func New{{StructName}}Impl({{RepoName}} repo.{{StructName}}Repo) *{{StructName}}Impl {
+	return &{{StructName}}Impl{{RepoName}}: {{RepoName}}}
+}
+
+func (d {{StructName}}Impl) Add{{StructName}}({{VarName}} data.{{StructName}}) (err error) {
+	return d.{{RepoName}}.Add({{VarName}})
+}
+
+func (d {{StructName}}Impl) Del{{StructName}}({{VarName}} data.{{StructName}}) (err error) {
+	return d.{{RepoName}}.Delete({{VarName}})
+}
+
+func (d {{StructName}}Impl) GetAll{{StructName}}() (err error, {{VarName}}List []data.{{StructName}}) {
+	err, {{VarName}}List = d.{{RepoName}}.FindAll()
+	return
+}
+
+func (d {{StructName}}Impl) Get{{StructName}}({{VarName}} data.{{StructName}}) (err error, {{VarName}}List []data.{{StructName}}) {
+	err, {{VarName}}List = d.{{RepoName}}.FindByStruct({{VarName}})
+	return
+}

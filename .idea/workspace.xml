@@ -4,207 +4,19 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e207cfe1-bf5d-4f60-a3ac-07630d64944f" name="Changes" comment=":sparkles: 数据中心，mqtt数据-&gt;influxdb">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/git_toolbox_prj.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/kv-iot.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/datacenter/config.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/datacenter/datacenter.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/datacenter/main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/test001/test002.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/ttest.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datacenter/data/center_msg.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datacenter/datacenter.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datacenter/service/center/center.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datacenter/service/center/inflxdb/influx.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datacenter/service/mq/mqtt_sub.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/logs/log.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/deepmap/oapi-codegen/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/deepmap/oapi-codegen/pkg/runtime/bind.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/deepmap/oapi-codegen/pkg/runtime/bindparam.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/deepmap/oapi-codegen/pkg/runtime/bindstring.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/deepmap/oapi-codegen/pkg/runtime/deepobject.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/deepmap/oapi-codegen/pkg/runtime/styleparam.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/deepmap/oapi-codegen/pkg/types/date.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/deepmap/oapi-codegen/pkg/types/email.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/deepmap/oapi-codegen/pkg/types/regexes.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/CHANGELOG.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/api/authorizations.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/api/buckets.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/api/delete.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/api/doc.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/api/http/error.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/api/http/options.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/api/http/service.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/api/labels.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/api/organizations.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/api/paging.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/api/query.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/api/query/table.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/api/tasks.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/api/users.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/api/write.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/api/write/ext.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/api/write/options.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/api/write/point.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/api/writeAPIBlocking.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/client.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/compatibility.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/domain/Readme.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/domain/client.gen.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/domain/oss.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/domain/types.gen.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/internal/gzip/gzip.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/internal/http/userAgent.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/internal/log/logger.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/internal/write/queue.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/internal/write/service.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/log/logger.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/options.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/influxdb-client-go/v2/version.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/line-protocol/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/line-protocol/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/line-protocol/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/line-protocol/encoder.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/line-protocol/escape.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/line-protocol/handler.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/line-protocol/machine.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/line-protocol/machine.go.rl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/line-protocol/metric.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/line-protocol/parser.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/influxdata/line-protocol/writer.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/pkg/errors/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/pkg/errors/.travis.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/pkg/errors/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/pkg/errors/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/pkg/errors/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/pkg/errors/appveyor.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/pkg/errors/errors.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/pkg/errors/go113.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/github.com/pkg/errors/stack.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/.codecov.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/CHANGELOG.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/LICENSE.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/bool.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/bool_ext.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/doc.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/duration.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/duration_ext.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/error.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/error_ext.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/float32.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/float32_ext.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/float64.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/float64_ext.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/gen.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/int32.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/int64.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/nocmp.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/pointer_go118.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/pointer_go119.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/string.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/string_ext.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/time.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/time_ext.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/uint32.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/uint64.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/uintptr.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/unsafe_pointer.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/atomic/value.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/multierr/.codecov.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/multierr/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/multierr/CHANGELOG.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/multierr/LICENSE.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/multierr/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/multierr/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/multierr/error.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/multierr/glide.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/.codecov.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/.readme.tmpl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/CHANGELOG.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/CODE_OF_CONDUCT.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/CONTRIBUTING.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/FAQ.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/LICENSE.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/array.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/array_go118.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/buffer/buffer.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/buffer/pool.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/checklicense.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/config.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/doc.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/encoder.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/error.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/field.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/flag.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/glide.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/global.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/http_handler.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/internal/bufferpool/bufferpool.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/internal/color/color.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/internal/exit/exit.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/internal/level_enabler.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/level.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/logger.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/options.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/sink.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/stacktrace.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/sugar.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/time.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/writer.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/zapcore/buffered_write_syncer.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/zapcore/clock.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/zapcore/console_encoder.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/zapcore/core.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/zapcore/doc.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/zapcore/encoder.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/zapcore/entry.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/zapcore/error.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/zapcore/field.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/zapcore/hook.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/zapcore/increase_level.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/zapcore/json_encoder.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/zapcore/level.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/zapcore/level_strings.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/zapcore/marshaler.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/zapcore/memory_encoder.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/zapcore/reflected_encoder.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/zapcore/sampler.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/zapcore/tee.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/go.uber.org/zap/zapcore/write_syncer.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/golang.org/x/net/publicsuffix/data/children" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/golang.org/x/net/publicsuffix/data/nodes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/golang.org/x/net/publicsuffix/data/text" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/golang.org/x/net/publicsuffix/list.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/golang.org/x/net/publicsuffix/table.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/auth/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/auth/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/device/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/device/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/js.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/js.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/js_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/js_test.go" afterDir="false" />
+    <list default="true" id="e207cfe1-bf5d-4f60-a3ac-07630d64944f" name="Changes" comment=":sparkles: add 1,设备以及产品通用接口 2,influx配置">
+      <change afterPath="$PROJECT_DIR$/cmd/autocode/api_template.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/autocode/autocode.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/autocode/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/autocode/service_template.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/device/endpoint/http/v1/api/channels/channels.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/device/endpoint/http/v1/api/kv_action/kv_action.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/kv-iot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kv-iot.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datacenter/service/center/center.go" beforeDir="false" afterPath="$PROJECT_DIR$/datacenter/service/center/center.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datacenter/service/deivce/device.go" beforeDir="false" afterPath="$PROJECT_DIR$/datacenter/service/deivce/device.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datacenter/service/mqttchan/device_chan_mqtt.go" beforeDir="false" afterPath="$PROJECT_DIR$/datacenter/service/mqttchan/device_chan_mqtt.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pkg/mqtt/pub.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/mqtt/pub.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/mqtt/pub_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/mqtt/pub_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/mqtt/sub.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/mqtt/sub.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/mqtt/sub_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/mqtt/sub_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rule/endpoint/http/v1/api/base.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rule/endpoint/http/v1/router.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/modules.txt" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/modules.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -228,11 +40,6 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;
-  }
-}</component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
       <filtered-out-file-type name="LOCAL_BRANCH" />
@@ -304,65 +111,74 @@
     "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
     "RunOnceActivity.go.vendoring.notification.had.been.shown": "true",
     "WebServerToolWindowFactoryState": "false",
-    "configurable..is.expanded": "false",
-    "configurable.GoLibrariesConfigurable.is.expanded": "true",
     "go.import.settings.migrated": "true",
-    "last_opened_file_path": "D:/goproject/kv-iot/cmd/datacenter",
+    "last_opened_file_path": "C:/Users/user",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "go.sdk",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\goproject\kv-iot" />
+      <recent name="D:\goproject\kv-iot\cmd\device" />
       <recent name="D:\goproject\kv-iot\cmd\datacenter" />
       <recent name="D:\goproject\kv-iot\datacenter\center" />
       <recent name="D:\goproject\kv-iot\rule" />
-      <recent name="D:\goproject\kv-iot\device\service" />
-      <recent name="D:\goproject\kv-iot\auth\data\repo" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\goproject\kv-iot\device\endpoint\http\v1\api\device" />
+      <recent name="D:\goproject\kv-iot\cmd\auth" />
       <recent name="D:\goproject\kv-iot\datacenter\service" />
       <recent name="D:\goproject\kv-iot\cmd" />
       <recent name="D:\goproject\kv-iot\datacenter\center" />
-      <recent name="D:\goproject\kv-iot\cmd\test001" />
-      <recent name="D:\goproject\kv-iot\pkg\result" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Test.TestMqtt_Pub in kv-iot/pkg/mqtt">
-    <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Go Build.go build kv-iot/cmd/autocode">
+    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="kv-iot" />
       <working_directory value="$PROJECT_DIR$" />
       <kind value="FILE" />
-      <package value="kv-iot" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$/cmd/datacenter/main.go" />
-      <method v="2" />
-    </configuration>
-    <configuration name="BenchmarkSyncQueue2 in kv-iot/datacenter/center/syncqueue" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="kv-iot" />
-      <working_directory value="$PROJECT_DIR$/datacenter/center/syncqueue" />
-      <root_directory value="$PROJECT_DIR$" />
-      <kind value="PACKAGE" />
-      <package value="kv-iot/datacenter/center/syncqueue" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
-      <framework value="gobench" />
-      <pattern value="^\QBenchmarkSyncQueue2\E$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestBinaryToJSON in kv-iot/pkg" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="go build kv-iot/cmd/auth" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="kv-iot" />
-      <working_directory value="$PROJECT_DIR$/pkg" />
-      <root_directory value="$PROJECT_DIR$" />
+      <working_directory value="$PROJECT_DIR$" />
       <kind value="PACKAGE" />
-      <package value="kv-iot/pkg" />
+      <package value="kv-iot/cmd/auth" />
       <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <framework value="gotest" />
-      <pattern value="^\QTestBinaryToJSON\E$" />
+      <filePath value="$PROJECT_DIR$/cmd/auth/main.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build kv-iot/cmd/autoCode" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="kv-iot" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="kv-iot/cmd/autoCode" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/cmd/autoCode/main.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build kv-iot/cmd/autocode" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="kv-iot" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="kv-iot/cmd/autocode" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/cmd/autocode/main.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build kv-iot/cmd/device" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="kv-iot" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="kv-iot/cmd/device" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/cmd/device/main.go" />
       <method v="2" />
     </configuration>
     <configuration name="TestMqtt_Pub in kv-iot/pkg/mqtt" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -377,32 +193,29 @@
       <pattern value="^\QTestMqtt_Pub\E$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestNewSyncQueue in kv-iot/datacenter/center/syncqueue" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
       <module name="kv-iot" />
-      <working_directory value="$PROJECT_DIR$/datacenter/center/syncqueue" />
-      <root_directory value="$PROJECT_DIR$" />
-      <kind value="PACKAGE" />
-      <package value="kv-iot/datacenter/center/syncqueue" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="DIRECTORY" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
       <framework value="gotest" />
-      <pattern value="^\QTestNewSyncQueue\E$" />
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Go Build.go build main.go" />
-      <item itemvalue="Go Test.BenchmarkSyncQueue2 in kv-iot/datacenter/center/syncqueue" />
-      <item itemvalue="Go Test.TestBinaryToJSON in kv-iot/pkg" />
-      <item itemvalue="Go Test.TestNewSyncQueue in kv-iot/datacenter/center/syncqueue" />
+      <item itemvalue="Go Build.go build kv-iot/cmd/autoCode" />
+      <item itemvalue="Go Build.go build kv-iot/cmd/autocode" />
+      <item itemvalue="Go Build.go build kv-iot/cmd/auth" />
+      <item itemvalue="Go Build.go build kv-iot/cmd/device" />
       <item itemvalue="Go Test.TestMqtt_Pub in kv-iot/pkg/mqtt" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Build.go build kv-iot/cmd/autocode" />
+        <item itemvalue="Go Build.go build kv-iot/cmd/autoCode" />
+        <item itemvalue="Go Build.go build kv-iot/cmd/device" />
+        <item itemvalue="Go Build.go build kv-iot/cmd/auth" />
         <item itemvalue="Go Test.TestMqtt_Pub in kv-iot/pkg/mqtt" />
-        <item itemvalue="Go Build.go build main.go" />
-        <item itemvalue="Go Test.TestBinaryToJSON in kv-iot/pkg" />
-        <item itemvalue="Go Test.BenchmarkSyncQueue2 in kv-iot/datacenter/center/syncqueue" />
-        <item itemvalue="Go Test.TestNewSyncQueue in kv-iot/datacenter/center/syncqueue" />
       </list>
     </recent_temporary>
   </component>
@@ -442,7 +255,10 @@
     <MESSAGE value=":sparkles: device-services" />
     <MESSAGE value=":pushpin: 上传依赖文件" />
     <MESSAGE value=":sparkles: 数据中心，mqtt数据-&gt;influxdb" />
-    <option name="LAST_COMMIT_MESSAGE" value=":sparkles: 数据中心，mqtt数据-&gt;influxdb" />
+    <MESSAGE value=":sparkles: add: Mqtt通讯通道接口,设备对接" />
+    <MESSAGE value=":art: update 基础框架调整" />
+    <MESSAGE value=":sparkles: add 1,设备以及产品通用接口 2,influx配置" />
+    <option name="LAST_COMMIT_MESSAGE" value=":sparkles: add 1,设备以及产品通用接口 2,influx配置" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
@@ -454,6 +270,26 @@
           <url>file://$PROJECT_DIR$/vendor/gorm.io/gorm/finisher_api.go</url>
           <line>22</line>
           <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/device/endpoint/http/v1/api/device/device.go</url>
+          <line>22</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/db/base_repo.go</url>
+          <line>33</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/auth/endpoint/rest/v1/router.go</url>
+          <line>36</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/auth/endpoint/rest/v1/router.go</url>
+          <line>41</line>
+          <option name="timeStamp" value="19" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

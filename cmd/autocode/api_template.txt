@@ -1,0 +1,60 @@
+package {{PackageName}}
+
+import (
+	"github.com/gin-gonic/gin"
+	"kv-iot/device/data"
+	"kv-iot/device/result"
+	"kv-iot/device/service"
+	"time"
+)
+
+type {{StructName}}Api struct {
+	baseService *service.BaseService
+}
+
+func New{{StructName}}Api(baseService *service.BaseService) *{{StructName}}Api {
+	return &{{StructName}}Api{baseService: baseService}
+}
+
+func (a *{{StructName}}Api) Add{{StructName}}(c *gin.Context) {
+	{{VarName}} := data.{{StructName}}{}
+	{{VarName}}.LastTime = time.Now()
+	c.BindJSON(&{{VarName}})
+	err := a.baseService.{{StructName}}Service.Add{{StructName}}({{VarName}})
+	if err != nil {
+		result.BaseResult{}.ErrResult(c, nil, "添加失败")
+	} else {
+		result.BaseResult{}.SuccessResult(c, {{VarName}}, "添加成功")
+	}
+}
+
+func (a *{{StructName}}Api) Del{{StructName}}(c *gin.Context) {
+	{{VarName}} := data.{{StructName}}{}
+	c.BindJSON(&{{VarName}})
+	err := a.baseService.{{StructName}}Service.Del{{StructName}}({{VarName}})
+	if err != nil {
+		result.BaseResult{}.ErrResult(c, nil, "删除失败")
+	} else {
+		result.BaseResult{}.SuccessResult(c, nil, "删除成功")
+	}
+}
+
+func (a *{{StructName}}Api) Get{{StructName}}(c *gin.Context) {
+	{{VarName}} := data.{{StructName}}{}
+	c.BindJSON(&{{VarName}})
+	err, {{VarName}}List := a.baseService.{{StructName}}Service.Get{{StructName}}({{VarName}})
+	if err != nil {
+		result.BaseResult{}.ErrResult(c, nil, "查询失败")
+	} else {
+		result.BaseResult{}.SuccessResult(c, {{VarName}}List, "查询成功")
+	}
+}
+
+func (a *{{StructName}}Api) GetAll{{StructName}}(c *gin.Context) {
+	err, {{VarName}}List := a.baseService.{{StructName}}Service.GetAll{{StructName}}()
+	if err != nil {
+		result.BaseResult{}.ErrResult(c, nil, "查询失败")
+	} else {
+		result.BaseResult{}.SuccessResult(c, {{VarName}}List, "查询成功")
+	}
+}

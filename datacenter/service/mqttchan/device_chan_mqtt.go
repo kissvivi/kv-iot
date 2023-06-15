@@ -3,6 +3,7 @@ package mqttchan
 import (
 	"fmt"
 	MQTT "github.com/eclipse/paho.mqtt.golang"
+	"github.com/pkg/errors"
 	"kv-iot/datacenter/data"
 	"kv-iot/datacenter/service/center"
 	"kv-iot/pkg/mqtt"
@@ -70,9 +71,12 @@ func (d *DeviceChanMqtt) StateDevice(msg data.KvMsg) (err error) {
 	return
 }
 
-func (d *DeviceChanMqtt) SendMsg() {
-	//TODO implement me
-	panic("implement me")
+func (d *DeviceChanMqtt) SendMsg(topic string, payload []byte) error {
+	if d.state != ING {
+		return errors.New("mqtt channel is not active")
+	}
+	d.mqttConn.Pub(0, topic, string(payload))
+	return nil
 }
 
 func NewDeviceChanMqtt() *DeviceChanMqtt {

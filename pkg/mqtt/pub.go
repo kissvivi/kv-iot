@@ -8,6 +8,9 @@ import (
 func (m Mqtt) Pub(qos int, topic string, text string) {
 	token := m.Conn.Publish(topic, byte(qos), false, text)
 	token.Wait()
+	if token.Error() != nil {
+		fmt.Println(token.Error())
+	}
 	fmt.Printf("Pub to topic %s,msg:%v\n", topic, text)
 }
 
