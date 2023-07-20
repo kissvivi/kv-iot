@@ -39,9 +39,7 @@ func ssub(cmd *cobra.Command, args []string) {
 	// 4.改变设备状态
 	// 5.注销设备
 	mc.Create()
-	mc.AuthDevice()
 	mc.RegDevice()
-	mc.StateDevice()
 }
 
 func Execute() {
