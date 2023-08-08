@@ -39,6 +39,8 @@
 * 最近较忙，更新较少，欢迎志同道合的朋友一起讨论物联网技术
 ### ✨ [Demo 体验地址 暂无](127.0.0.1)
 
+### ✨ [kv-iot 文档地址/问题记录](http://doc.kv-iot.cn/)
+
 ### 前端开源地址
 * https://github.com/kissvivi/kv-iot-web.git
 ### ✨ InfluxDB数据接入
