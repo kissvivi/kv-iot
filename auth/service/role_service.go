@@ -6,9 +6,9 @@ import (
 	"log"
 )
 
-var _ roleService = (*RoleServiceImpl)(nil)
+var _ RoleService = (*RoleServiceImpl)(nil)
 
-type roleService interface {
+type RoleService interface {
 	AddRole(role data.Role) (err error)
 	DelRole(role data.Role) (err error)
 }

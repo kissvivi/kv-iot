@@ -1,8 +1,6 @@
 package config
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/spf13/viper"
 )
 
@@ -17,15 +15,17 @@ type Application struct {
 }
 
 type DeviceServer struct {
-	Version    string     `json:"version"`
-	HttpServer HttpServer `json:"httpserver"`
+	Version    string      `json:"version"`
+	HttpServer HttpServer  `json:"httpserver"`
+	GrpcServer GrpcServer  `json:"grpcserver"`
 }
 
 type AuthServer struct {
-	Version      string     `json:"version"`
-	HttpServer   HttpServer `json:"httpserver"`
-	JwtKey       string     `json:"jwtKey"`
-	TokenTimeout int64      `json:"tokenTimeout"`
+	Version      string      `json:"version"`
+	HttpServer   HttpServer  `json:"httpserver"`
+	GrpcServer   GrpcServer  `json:"grpcserver"`
+	JwtKey       string      `json:"jwtKey"`
+	TokenTimeout int64       `json:"tokenTimeout"`
 }
 
 type HttpServer struct {
@@ -34,6 +34,12 @@ type HttpServer struct {
 	Mode         string `json:"mode"`
 	ReadTimeout  int    `json:"readTimeout"` //单位分钟
 	WriteTimeout int    `json:"writeTimeout"`
+}
+
+// GrpcServer gRPC服务配置
+type GrpcServer struct {
+	Host string `json:"host"`
+	Port string `json:"port"`
 }
 
 type Mysql struct {
@@ -66,10 +72,19 @@ type Redis struct {
 	Dbname   string `json:"dbname"`
 }
 
+type Mqtt struct {
+	Url      string `json:"url"`
+	Port     string `json:"port"`
+	Username string `json:"username"`
+	Password string `json:"password"`
+	ClientID string `json:"clientId"`
+}
+
 type Datasource struct {
 	Mysql  Mysql  `json:"mysql"`
 	Redis  Redis  `json:"redis"`
 	Influx Influx `json:"influx"`
+	Mqtt   Mqtt   `json:"mqtt"`
 
 	//Host     string `json:"host"`
 	//Port     string `json:"port"`
@@ -99,8 +114,6 @@ func InitConfig() (*Config, error) {
 	}
 	var cfg Config
 	err = v.Unmarshal(&cfg)
-	ss, _ := json.Marshal(cfg)
-	fmt.Println(string(ss))
 	if err != nil {
 		return nil, err
 	}

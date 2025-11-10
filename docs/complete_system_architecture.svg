@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="700" viewBox="0 0 900 700">
+  <!-- 背景和标题 -->
+  <rect width="900" height="700" fill="#f9f9f9" rx="10" ry="10"/>
+  <text x="450" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#333">kv-iot 云边一体化物联网平台系统架构</text>
+  
+  <!-- 设备层 -->
+  <rect x="50" y="80" width="800" height="100" rx="10" ry="10" fill="#e3f2fd" stroke="#2196f3" stroke-width="2"/>
+  <text x="450" y="110" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#1976d2">设备层</text>
+  
+  <!-- 设备图标 -->
+  <rect x="100" y="130" width="120" height="50" rx="5" ry="5" fill="#bbdefb" stroke="#1976d2" stroke-width="1"/>
+  <text x="160" y="160" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#0d47a1">MQTT设备</text>
+  
+  <rect x="270" y="130" width="120" height="50" rx="5" ry="5" fill="#bbdefb" stroke="#1976d2" stroke-width="1"/>
+  <text x="330" y="160" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#0d47a1">TCP设备</text>
+  
+  <rect x="440" y="130" width="120" height="50" rx="5" ry="5" fill="#bbdefb" stroke="#1976d2" stroke-width="1"/>
+  <text x="500" y="160" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#0d47a1">HTTP设备</text>
+  
+  <rect x="610" y="130" width="120" height="50" rx="5" ry="5" fill="#bbdefb" stroke="#1976d2" stroke-width="1"/>
+  <text x="670" y="160" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#0d47a1">模拟设备演示</text>
+  
+  <!-- 数据中心服务（核心衔接） -->
+  <rect x="300" y="230" width="300" height="140" rx="10" ry="10" fill="url(#orangeGradient)" stroke="#ff9800" stroke-width="4"/>
+  <defs>
+    <linearGradient id="orangeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffecb3;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffe0b2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <text x="450" y="260" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="#e65100">数据中心服务</text>
+  <text x="450" y="290" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#bf360c">datacenter - 核心衔接组件</text>
+  <text x="450" y="315" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#d32f2f">MQTT通道 + 设备认证 + 数据转换</text>
+  <text x="450" y="335" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#d32f2f">设备同步调度器</text>
+  
+  <!-- 其他服务 -->
+  <rect x="100" y="390" width="140" height="70" rx="5" ry="5" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
+  <text x="170" y="420" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#2e7d32">认证服务</text>
+  <text x="170" y="445" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#388e3c">auth</text>
+  
+  <rect x="320" y="390" width="170" height="70" rx="5" ry="5" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
+  <text x="405" y="420" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#2e7d32">设备管理服务</text>
+  <text x="405" y="445" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#388e3c">device</text>
+  
+  <rect x="560" y="390" width="170" height="70" rx="5" ry="5" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
+  <text x="645" y="420" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#2e7d32">规则引擎服务</text>
+  <text x="645" y="445" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#388e3c">rule (规划中)</text>
+  
+  <!-- 前端界面 -->
+  <rect x="780" y="280" width="90" height="80" rx="5" ry="5" fill="#fce4ec" stroke="#e91e63" stroke-width="2"/>
+  <text x="825" y="320" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#c2185b">前端界面</text>
+  <text x="825" y="340" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#c2185b">Web管理</text>
+  
+  <!-- 数据层 -->
+  <rect x="50" y="490" width="800" height="160" rx="10" ry="10" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2"/>
+  <text x="450" y="520" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#4a148c">数据存储层</text>
+  
+  <!-- 数据库组件 -->
+  <rect x="150" y="540" width="180" height="100" rx="5" ry="5" fill="#e1bee7" stroke="#7b1fa2" stroke-width="1"/>
+  <text x="240" y="570" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#4a148c">MySQL</text>
+  <text x="240" y="595" font-family="Arial, sans-serif" font-size="13" text-anchor="middle" fill="#6a1b9a">设备信息</text>
+  <text x="240" y="615" font-family="Arial, sans-serif" font-size="13" text-anchor="middle" fill="#6a1b9a">产品配置</text>
+  <text x="240" y="635" font-family="Arial, sans-serif" font-size="13" text-anchor="middle" fill="#6a1b9a">通道设置</text>
+  
+  <rect x="570" y="540" width="180" height="100" rx="5" ry="5" fill="#e1bee7" stroke="#7b1fa2" stroke-width="1"/>
+  <text x="660" y="570" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#4a148c">InfluxDB</text>
+  <text x="660" y="595" font-family="Arial, sans-serif" font-size="13" text-anchor="middle" fill="#6a1b9a">时序数据</text>
+  <text x="660" y="615" font-family="Arial, sans-serif" font-size="13" text-anchor="middle" fill="#6a1b9a">设备上报数据</text>
+  <text x="660" y="635" font-family="Arial, sans-serif" font-size="13" text-anchor="middle" fill="#6a1b9a">历史记录</text>
+  
+  <!-- 连接箭头 -->
+  <!-- 设备到数据中心服务（突出主连接） -->
+  <line x1="160" y1="180" x2="160" y2="230" stroke="#666" stroke-width="2"/>
+  <polygon points="160,235 155,225 165,225" fill="#666"/>
+  
+  <line x1="330" y1="180" x2="330" y2="230" stroke="#666" stroke-width="2"/>
+  <polygon points="330,235 325,225 335,225" fill="#666"/>
+  
+  <line x1="500" y1="180" x2="500" y2="230" stroke="#666" stroke-width="2"/>
+  <polygon points="500,235 495,225 505,225" fill="#666"/>
+  
+  <line x1="670" y1="180" x2="670" y2="230" stroke="#666" stroke-width="2"/>
+  <polygon points="670,235 665,225 675,225" fill="#666"/>
+  
+  <!-- 数据中心服务到其他服务（突出衔接作用） -->
+  <line x1="450" y1="370" x2="450" y2="390" stroke="#ff6600" stroke-width="3"/>
+  <polygon points="450,395 445,385 455,385" fill="#ff6600"/>
+  
+  <line x1="400" y1="320" x2="320" y2="420" stroke="#666" stroke-width="2"/>
+  <polygon points="320,420 312,412 312,428" fill="#666"/>
+  
+  <line x1="500" y1="320" x2="560" y2="420" stroke="#666" stroke-width="2"/>
+  <polygon points="560,420 568,412 568,428" fill="#666"/>
+  
+  <line x1="170" y1="460" x2="170" y2="490" stroke="#666" stroke-width="2"/>
+  <polygon points="170,495 165,485 175,485" fill="#666"/>
+  
+  <line x1="405" y1="460" x2="405" y2="490" stroke="#666" stroke-width="2"/>
+  <polygon points="405,495 400,485 410,485" fill="#666"/>
+  
+  <line x1="645" y1="460" x2="645" y2="490" stroke="#666" stroke-width="2"/>
+  <polygon points="645,495 640,485 650,485" fill="#666"/>
+  
+  <!-- 数据中心服务到数据库（主要连接） -->
+  <line x1="450" y1="370" x2="450" y2="490" stroke="#ff6600" stroke-width="3"/>
+  <polygon points="450,495 445,485 455,485" fill="#ff6600"/>
+  
+  <!-- 数据中心到InfluxDB的直接连接 -->
+  <line x1="450" y1="370" x2="660" y2="540" stroke="#9c27b0" stroke-width="2" stroke-dasharray="5,3"/>
+  <polygon points="660,540 652,532 652,548" fill="#9c27b0"/>
+  
+  <!-- 数据中心服务到前端 -->
+  <line x1="600" y1="280" x2="780" y2="320" stroke="#666" stroke-width="2"/>
+  <polygon points="780,320 772,312 772,328" fill="#666"/>
+  
+  <!-- 前端到认证服务 -->
+  <line x1="825" y1="360" x2="170" y2="420" stroke="#666" stroke-width="2" stroke-dasharray="5,3"/>
+  <polygon points="170,420 178,412 178,428" fill="#666"/>
+  
+  <!-- 设备管理服务到数据中心的设备同步 -->
+  <line x1="405" y1="420" x2="400" y2="320" stroke="#ff6600" stroke-width="1" stroke-dasharray="3,2"/>
+  <polygon points="400,320 408,328 408,312" fill="#ff6600"/>
+  <text x="360" y="370" font-family="Arial, sans-serif" font-size="10" fill="#e65100" transform="rotate(-45, 360, 370)">设备同步</text>
+  
+  <!-- 核心衔接说明 -->
+  <text x="450" y="200" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#d32f2f">👇 核心衔接组件 👇</text>
+  
+  <!-- 数据流向说明 -->
+  <rect x="250" y="670" width="400" height="25" rx="5" ry="5" fill="#fff" stroke="#333" stroke-width="1"/>
+  <text x="450" y="688" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#333">数据流向: 设备 → 数据中心 → 服务层/存储层 → 前端展示</text>
+</svg>
