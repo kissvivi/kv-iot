@@ -7,6 +7,9 @@ application:
       mode: dev
       readTimeout: 5
       writeTimeout: 5
+    grpcserver:
+      host: 0.0.0.0
+      port: 8110
   authServer:
     version: 0.0.2
     httpserver:
@@ -15,16 +18,25 @@ application:
       mode: dev
       readTimeout: 5
       writeTimeout: 5
+    grpcserver:
+      host: 0.0.0.0
+      port: 8111
 datasource:
   mysql:
-    url: 172.18.61.43:3306
+    url: 172.30.25.178:3306
     username: admin
     password: admin
     dbname: kv-iot
   influx:
-    url: 172.18.61.43:8086
+    url: 172.30.25.178:8086
 #    username: admin
 #    password: admin
     org: kv-iot
     bucket: kv-iot-bucket
     token: WqKMMmXViZ_w8msji4J-vY9asCWkwYQhFX6cK9UlDDCB6JdB6tWLuK7-hTVVRnBRmw0CRPS3b3iBtHKOLPVNMg==
+  mqtt:
+    url: 127.0.0.1
+    port: "1883"
+    username: ""
+    password: ""
+    clientId: "kv-iot-datacenter"

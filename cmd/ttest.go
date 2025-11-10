@@ -124,6 +124,78 @@ func main() {
 	//	fmt.Println(ss)
 	//}
 
-	fmt.Println(1111)
+	//fmt.Println(1111)
+	//fmt.Println(selectSort([]int{1,4,3,7,8,0}))
+	//fmt.Println(quickSort([]int{1,4,3,7,8,0}))
+	//
+	//fmt.Println(EerFen([]int{1,4,3,7,8,0},7))
 
+	fmt.Println(HasStatus(512, 512))
+	fmt.Println(HasStatus(4, 3))
+	fmt.Println(HasStatus(4, 2))
+	fmt.Println(HasStatus(4, 1))
+
+}
+
+func HasStatus(src, status uint16) bool {
+	return (src & status) == status
+}
+
+func quickSort(arr []int) []int {
+	if len(arr) <= 1 {
+		return arr
+	}
+	p := arr[len(arr)/2]
+
+	var left, right []int
+
+	for _, num := range arr {
+
+		if p > num {
+			left = append(left, num)
+		} else if p < num {
+			right = append(right, num)
+		}
+	}
+
+	left = quickSort(left)
+	right = quickSort(right)
+
+	return append(append(left, p), right...)
+
+}
+
+func selectSort(arr []int) []int {
+
+	for i := 0; i < len(arr); i++ {
+		index := i
+		for j := i; j < len(arr); j++ {
+			if arr[j] < arr[index] {
+				index = j
+			}
+		}
+		//temp:=arr[index]
+		//arr[index] = arr[i]
+		//arr[i] = temp
+
+		// 使用平行赋值进行交换
+		arr[index], arr[i] = arr[i], arr[index]
+	}
+	return arr
+}
+
+func EerFen(arr []int, target int) int {
+	left, right := 0, len(arr)-1
+	for {
+		p := left + (right-left)/2
+		if arr[p] == target {
+			return p
+		} else if arr[p] < target {
+			left = p + 1
+		} else if arr[p] > target {
+			right = p - 1
+		}
+	}
+
+	return -1
 }
