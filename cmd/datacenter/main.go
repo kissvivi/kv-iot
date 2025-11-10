@@ -2,44 +2,100 @@ package main
 
 import (
 	"fmt"
-	"github.com/spf13/cobra"
+	"kv-iot/config"
 	"kv-iot/datacenter/service/mqttchan"
+	"kv-iot/db"
+	"log"
 	"os"
+	"os/signal"
+	"syscall"
+
+	"github.com/spf13/cobra"
 )
 
-// TODO 接受参数传入 可配置 ip 等
+// 全局配置
+var (
+	cfg *config.Config
+)
+
 var rootCmd = &cobra.Command{
 	Use:   "kv-iot",
-	Short: "kv-iot",
+	Short: "kv-iot 数据中心服务",
 	Long: `
+	 ___  __    ___      ___             ___  ________  _________   
+	|\  \|\  \ |\  \    /  /|           |\  \|\   __  \|\___   ___\ 
+	 \ \  \/  /|\ \  \  /  / /___________\ \  \ \  \|\  \|___ \  \_| 
+   \ \   ___  \ \  \/  / /\____________\ \  \ \  \\\  \   \ \  \  
+    \ \  \\ \  \ \    / /\|____________|\ \  \ \  \\\  \   \ \  \ 
+     \ \__\\ \__\ \__/ /                 \ \__\ \_______\   \ \__\
+      \|__| \|__|\|__|/                   \|__|\|_______|    \|__|
+
+    数据采集中心 - 连接设备与平台的桥梁，统一数据格式处理
+`,
+}
+
+var serverCmd = &cobra.Command{
+	Use:   "run",
+	Short: "运行数据中心服务，监听数据并转发数据",
+	Long:  `-mqtt 表示使用mqtt监听`,
+	Run:   runServer,
+}
+
+func init() {
+	// 添加命令行参数
+	rootCmd.AddCommand(serverCmd)
+}
+
+func runServer(cmd *cobra.Command, args []string) {
+	// 显示程序说明信息
+	fmt.Println(`
 	 ___  __    ___      ___             ___  ________  _________   
 	|\  \|\  \ |\  \    /  /|           |\  \|\   __  \|\___   ___\ 
 	 \ \  \/  /|\ \  \  /  / /___________\ \  \ \  \|\  \|___ \  \_| 
  	  \ \   ___  \ \  \/  / /\____________\ \  \ \  \\\  \   \ \  \  
   	   \ \  \\ \  \ \    / /\|____________|\ \  \ \  \\\  \   \ \  \ 
    	    \ \__\\ \__\ \__/ /                 \ \__\ \_______\   \ \__\
-         \|__| \|__|\|__|/                   \|__|\|_______|    \|__|`,
-	// 如果有相关的 action 要执行，请取消下面这行代码的注释
-	// Run: func(cmd *cobra.Command, args []string) { },
-}
+         \|__| \|__|\|__|/                   \|__|\|_______|    \|__|
+		 
+		 数据采集中心 - 连接设备与平台的桥梁，统一数据格式处理`)
+	// 1. 初始化配置
+	var err error
+	cfg, err = config.InitConfig()
+	if err != nil {
+		log.Fatalf("初始化配置失败: %v", err)
+	}
+	log.Printf("配置初始化成功，版本: %s", "0.0.1")
 
-var serverCmd = &cobra.Command{
-	Use:   "run",
-	Short: "此命令为运行一个dataCenter服务，监听数据并转发数据",
-	Long:  `-mqtt表示使用mqtt监听`,
-	Run:   ssub,
-}
+	// 2. 初始化数据库连接
+	initDB()
 
-func ssub(cmd *cobra.Command, args []string) {
+	// 3. 创建并初始化MQTT通道
 	mc := mqttchan.NewDeviceChanMqtt()
-	// 获取设备数据 步骤
-	// 1.建立数据通道
-	// 2.认证设备是否合规
-	// 3.注册设备
-	// 4.改变设备状态
-	// 5.注销设备
 	mc.Create()
-	mc.RegDevice()
+
+	// 4. 启动设备注册和数据处理
+	go func() {
+		mc.RegDevice()
+	}()
+
+	log.Println("数据中心服务启动成功")
+
+	// 5. 优雅退出处理
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	<-quit
+
+	log.Println("正在关闭数据中心服务...")
+	mc.Close()
+
+	log.Println("数据中心服务已关闭")
+}
+
+func initDB() {
+	// 初始化MySQL连接
+	baseDB := db.NewBaseDB("mysql")
+	baseDB.InitDB(cfg)
+	log.Println("数据库连接初始化成功")
 }
 
 func Execute() {
@@ -49,7 +105,7 @@ func Execute() {
 	}
 }
 func main() {
-	rootCmd.AddCommand(serverCmd)
+	// 注意：serverCmd已经在init()函数中添加过了，这里不需要重复添加
 	Execute()
 	//mqttchan.SSub()
 }
