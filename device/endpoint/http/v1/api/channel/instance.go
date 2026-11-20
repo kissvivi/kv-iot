@@ -1,11 +1,18 @@
 package channel
 
 import (
+	"encoding/json"
+	"fmt"
+	"io"
+	"kv-iot/config"
 	"kv-iot/device/data"
 	"kv-iot/device/service"
-	"encoding/json"
+	"net"
 	"net/http"
+	"os"
 	"strconv"
+	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -130,15 +137,13 @@ func (api *ApiChannelInstance) UpdateChannelInstance(c *gin.Context) {
 		return
 	}
 
-	var instance data.ChannelInstance
-	if err := c.ShouldBindJSON(&instance); err != nil {
+	var update service.ChannelInstanceUpdate
+	if err := c.ShouldBindJSON(&update); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body: " + err.Error()})
 		return
 	}
 
-	instance.ID = uint(id)
-
-	if err := api.baseService.ChannelInstanceService.UpdateChannelInstance(&instance); err != nil {
+	if _, err := api.baseService.ChannelInstanceService.UpdateChannelInstance(id, update); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update channel instance: " + err.Error()})
 		return
 	}
@@ -192,6 +197,10 @@ func (api *ApiChannelInstance) StartChannelInstance(c *gin.Context) {
 		return
 	}
 
+	if err := forwardRuntimeAction(c, id, "start"); err != nil {
+		c.JSON(http.StatusBadGateway, gin.H{"error": "启动运行通道失败: " + err.Error()})
+		return
+	}
 	if err := api.baseService.ChannelInstanceService.StartChannelInstance(id); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to start channel instance: " + err.Error()})
 		return
@@ -219,6 +228,10 @@ func (api *ApiChannelInstance) StopChannelInstance(c *gin.Context) {
 		return
 	}
 
+	if err := forwardRuntimeAction(c, id, "stop"); err != nil {
+		c.JSON(http.StatusBadGateway, gin.H{"error": "停止运行通道失败: " + err.Error()})
+		return
+	}
 	if err := api.baseService.ChannelInstanceService.StopChannelInstance(id); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to stop channel instance: " + err.Error()})
 		return
@@ -246,12 +259,65 @@ func (api *ApiChannelInstance) RestartChannelInstance(c *gin.Context) {
 		return
 	}
 
+	if err := forwardRuntimeAction(c, id, "restart"); err != nil {
+		c.JSON(http.StatusBadGateway, gin.H{"error": "重启运行通道失败: " + err.Error()})
+		return
+	}
 	if err := api.baseService.ChannelInstanceService.RestartChannelInstance(id); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to restart channel instance: " + err.Error()})
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "Channel instance restarted successfully"})
+}
+
+func forwardRuntimeAction(c *gin.Context, channelID int64, action string) error {
+	req, err := http.NewRequestWithContext(
+		c.Request.Context(),
+		http.MethodPost,
+		fmt.Sprintf("%s/channels/%d/%s", runtimeBaseURL(), channelID, action),
+		nil,
+	)
+	if err != nil {
+		return err
+	}
+	if authorization := c.GetHeader("Authorization"); authorization != "" {
+		req.Header.Set("Authorization", authorization)
+	}
+	if requestID := c.GetHeader("X-Request-ID"); requestID != "" {
+		req.Header.Set("X-Request-ID", requestID)
+	}
+	client := &http.Client{Timeout: 20 * time.Second}
+	response, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer response.Body.Close()
+	body, _ := io.ReadAll(io.LimitReader(response.Body, 4096))
+	if response.StatusCode < http.StatusOK || response.StatusCode >= http.StatusMultipleChoices {
+		message := strings.TrimSpace(string(body))
+		if message == "" {
+			message = response.Status
+		}
+		return fmt.Errorf("%s", message)
+	}
+	return nil
+}
+
+func runtimeBaseURL() string {
+	if configured := strings.TrimRight(strings.TrimSpace(os.Getenv("KV_RUNTIME_URL")), "/"); configured != "" {
+		return configured
+	}
+	server := config.CONFIG.Application.DatacenterServer.HttpServer
+	host := strings.TrimSpace(server.Host)
+	if host == "" || host == "0.0.0.0" || host == "::" {
+		host = "127.0.0.1"
+	}
+	port := strings.TrimSpace(server.Port)
+	if port == "" {
+		port = "8102"
+	}
+	return "http://" + net.JoinHostPort(host, port) + "/runtime"
 }
 
 // GetChannelInstanceStatus 获取通道实例状态
@@ -315,13 +381,6 @@ func (api *ApiChannelInstance) UpdateChannelConfig(c *gin.Context) {
 		return
 	}
 
-	// 获取通道实例
-	err, instance := api.baseService.ChannelInstanceService.GetChannelInstanceByID(id)
-	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Channel instance not found"})
-		return
-	}
-
 	// 将配置转换为JSON字符串
 	configJSON, err := json.Marshal(configData)
 	if err != nil {
@@ -330,10 +389,11 @@ func (api *ApiChannelInstance) UpdateChannelConfig(c *gin.Context) {
 	}
 
 	// 更新配置
-	instance.Config = string(configJSON)
-
-	// 保存更新
-	if err := api.baseService.ChannelInstanceService.UpdateChannelInstance(instance); err != nil {
+	configText := string(configJSON)
+	if _, err := api.baseService.ChannelInstanceService.UpdateChannelInstance(
+		id,
+		service.ChannelInstanceUpdate{Config: &configText},
+	); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update channel config: " + err.Error()})
 		return
 	}

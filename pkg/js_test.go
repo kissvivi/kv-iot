@@ -22,3 +22,14 @@ func TestBinaryToJSON(t *testing.T) {
 		return
 	}
 }
+
+func TestBinaryToJSONInjectsBinaryData(t *testing.T) {
+	got, err := BinaryToJSON(1, map[string]string{"deviceNo": "dev-001"}, "({ value: binaryData, deviceNo: deviceNo });", []byte("payload"))
+	if err != nil {
+		t.Fatalf("BinaryToJSON() error = %v", err)
+	}
+
+	if string(got) != `{"deviceNo":"dev-001","value":"payload"}` {
+		t.Fatalf("unexpected result: %s", got)
+	}
+}

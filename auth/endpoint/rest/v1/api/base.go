@@ -1,9 +1,22 @@
 package api
 
 type BaseApi struct {
-	UserApi UserApiImpl
+	UserApi       UserApiImpl
+	RoleApi       RoleApiImpl
+	ModuleApi     ModuleApiImpl
+	PermissionApi PermissionApiImpl
 }
 
-func NewBaseApi(userApi *UserApiImpl) *BaseApi {
-	return &BaseApi{UserApi: *userApi}
+func NewBaseApi(
+	userApi *UserApiImpl,
+	roleApi *RoleApiImpl,
+	moduleApi *ModuleApiImpl,
+	permissionApi *PermissionApiImpl,
+) *BaseApi {
+	return &BaseApi{
+		UserApi:       *userApi,
+		RoleApi:       *roleApi,
+		ModuleApi:     *moduleApi,
+		PermissionApi: *permissionApi,
+	}
 }

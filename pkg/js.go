@@ -18,6 +18,10 @@ func BinaryToJSON(xxx uint8, variables map[string]string, decodeScript string, b
 	vars := make(map[string]interface{})
 
 	vars["xxx"] = xxx
+	vars["binaryData"] = string(b)
+	for key, value := range variables {
+		vars[key] = value
+	}
 
 	v, err := executeJS(decodeScript, vars)
 	if err != nil {
@@ -33,11 +37,11 @@ func executeJS(script string, vars map[string]interface{}) (out interface{}, err
 	vm.Interrupt = make(chan func(), 1)
 	vm.SetStackDepthLimit(32)
 
-	//for k, v := range vars {
-	//	if err := vm.Set(k, v); err != nil {
-	//		return nil, errors.New(err.Error() + "set variable error")
-	//	}
-	//}
+	for key, value := range vars {
+		if err := vm.Set(key, value); err != nil {
+			return nil, errors.New(err.Error() + "set variable error")
+		}
+	}
 
 	go func() {
 		time.Sleep(maxExecutionTime)

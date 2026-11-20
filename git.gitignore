@@ -24,3 +24,5 @@ vendor/
 
 workspace.xml
 .idea/*
+.run/
+logs/

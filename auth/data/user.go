@@ -6,11 +6,9 @@ import (
 
 type User struct {
 	gorm.Model
-	UserName string `json:"userName" gorm:"column:user_name"` //用户名
-	Password string `json:"password" gorm:"column:password"`  //密码
-	// TODO: 应该添加密码哈希字段，避免明文存储
-	// HashPassword string `json:"-" gorm:"column:hash_password"` //使用json:"-"避免序列化
-	IsAdminFlag bool `json:"isAdmin" gorm:"column:is_admin;default:false"` //是否为管理员
+	UserName    string `json:"userName" gorm:"column:user_name"`             //用户名
+	Password    string `json:"-" gorm:"column:password"`                     //bcrypt密码哈希，兼容迁移期间的历史明文密码
+	IsAdminFlag bool   `json:"isAdmin" gorm:"column:is_admin;default:false"` //是否为管理员
 }
 
 func (u User) TableName() string {

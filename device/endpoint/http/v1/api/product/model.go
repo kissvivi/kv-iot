@@ -19,7 +19,10 @@ func NewApiProductModel(baseService *service.BaseService) *ApiProductModel {
 
 // GetProductModel 获取产品完整物模型
 func (a *ApiProductModel) GetProductModel(c *gin.Context) {
-	productIDStr := c.Query("product_id")
+	productIDStr := c.Param("id")
+	if productIDStr == "" {
+		productIDStr = c.Query("product_id")
+	}
 	productID, err := strconv.ParseInt(productIDStr, 10, 64)
 	if err != nil {
 		result.BaseResult{}.ErrResult(c, nil, "产品ID格式错误")
@@ -37,7 +40,10 @@ func (a *ApiProductModel) GetProductModel(c *gin.Context) {
 
 // CreateProductModel 创建产品物模型
 func (a *ApiProductModel) CreateProductModel(c *gin.Context) {
-	productIDStr := c.Query("product_id")
+	productIDStr := c.Param("id")
+	if productIDStr == "" {
+		productIDStr = c.Query("product_id")
+	}
 	productID, err := strconv.ParseInt(productIDStr, 10, 64)
 	if err != nil {
 		result.BaseResult{}.ErrResult(c, nil, "产品ID格式错误")
@@ -59,9 +65,43 @@ func (a *ApiProductModel) CreateProductModel(c *gin.Context) {
 	result.BaseResult{}.SuccessResult(c, nil, "创建物模型成功")
 }
 
+func (a *ApiProductModel) UpdateProductModel(c *gin.Context) {
+	productID, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	if err != nil {
+		result.BaseResult{}.ErrResult(c, nil, "产品ID格式错误")
+		return
+	}
+	var model service.ProductModel
+	if err := c.ShouldBindJSON(&model); err != nil {
+		result.BaseResult{}.ErrResult(c, nil, "请求参数格式错误: "+err.Error())
+		return
+	}
+	if err := a.baseService.ProductModelService.UpdateProductModel(productID, model); err != nil {
+		result.BaseResult{}.ErrResult(c, nil, "更新物模型失败: "+err.Error())
+		return
+	}
+	result.BaseResult{}.SuccessResult(c, nil, "更新物模型成功")
+}
+
+func (a *ApiProductModel) DeleteProductModel(c *gin.Context) {
+	productID, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	if err != nil {
+		result.BaseResult{}.ErrResult(c, nil, "产品ID格式错误")
+		return
+	}
+	if err := a.baseService.ProductModelService.DeleteProductModel(productID); err != nil {
+		result.BaseResult{}.ErrResult(c, nil, "删除物模型失败: "+err.Error())
+		return
+	}
+	result.BaseResult{}.SuccessResult(c, nil, "删除物模型成功")
+}
+
 // GetProductSchema 获取产品物模型JSON Schema
 func (a *ApiProductModel) GetProductSchema(c *gin.Context) {
-	productIDStr := c.Query("product_id")
+	productIDStr := c.Param("id")
+	if productIDStr == "" {
+		productIDStr = c.Query("product_id")
+	}
 	productID, err := strconv.ParseInt(productIDStr, 10, 64)
 	if err != nil {
 		result.BaseResult{}.ErrResult(c, nil, "产品ID格式错误")
@@ -79,7 +119,10 @@ func (a *ApiProductModel) GetProductSchema(c *gin.Context) {
 
 // ValidateDeviceData 验证设备数据
 func (a *ApiProductModel) ValidateDeviceData(c *gin.Context) {
-	productIDStr := c.Query("product_id")
+	productIDStr := c.Param("id")
+	if productIDStr == "" {
+		productIDStr = c.Query("product_id")
+	}
 	productID, err := strconv.ParseInt(productIDStr, 10, 64)
 	if err != nil {
 		result.BaseResult{}.ErrResult(c, nil, "产品ID格式错误")

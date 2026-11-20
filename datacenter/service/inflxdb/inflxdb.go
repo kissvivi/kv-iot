@@ -27,11 +27,11 @@ func NewInflux() *Influx {
 
 	// 创建客户端
 	client := influxdb2.NewClient(influxConfig.Url, influxConfig.Token)
-	
+
 	// 验证连接
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
-	
+
 	health, err := client.Health(ctx)
 	if err != nil {
 		log.Printf("InfluxDB健康检查失败: %v", err)
@@ -56,7 +56,7 @@ func (i *Influx) AddFluxData(msg data.KvMsg) error {
 
 	// 创建写入API
 	writeAPI := i.client.WriteAPI(i.org, i.bucket)
-	
+
 	// 处理写入错误
 	errorsCh := writeAPI.Errors()
 	go func() {
@@ -82,7 +82,7 @@ func (i *Influx) AddFluxData(msg data.KvMsg) error {
 	writeAPI.WritePoint(wp)
 	writeAPI.Flush()
 
-	log.Printf("成功写入InfluxDB: 设备=%s, 测量=%s", 
+	log.Printf("成功写入InfluxDB: 设备=%s, 测量=%s",
 		msg.Device.DeviceNo, "device_data")
 	return nil
 }

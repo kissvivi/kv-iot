@@ -1,8 +1,8 @@
 package repo
 
 import (
-	"kv-iot/device/data"
 	"gorm.io/gorm"
+	"kv-iot/device/data"
 )
 
 // ChannelInstanceRepoImpl 通道实例仓库实现

@@ -25,7 +25,7 @@ type AuthRepoI[T any] interface {
 }
 
 func (a AuthRepo[T]) Add(t T) (err error) {
-	log.Println(t)
+	log.Printf("add entity %T", t)
 	err = db.MYSQLDB.Create(&t).Error
 	if err != nil {
 		log.Println(err)
@@ -42,7 +42,7 @@ func (a AuthRepo[T]) Delete(t T) (err error) {
 }
 
 func (a AuthRepo[T]) FindOneByID(id int) (err error, result T) {
-	err = db.MYSQLDB.Where("id", id).First(&result).Error
+	err = db.MYSQLDB.Where("id = ?", id).First(&result).Error
 	return
 }
 

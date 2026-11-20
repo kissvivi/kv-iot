@@ -7,25 +7,33 @@ import (
 type Config struct {
 	Application Application `json:"application"`
 	Datasource  Datasource  `json:"datasource"`
+	Runtime     Runtime     `json:"runtime"`
 }
 
 type Application struct {
-	DeviceServer DeviceServer `json:"deviceServer"`
-	AuthServer   AuthServer   `json:"authServer"`
+	DeviceServer     DeviceServer     `json:"deviceServer"`
+	AuthServer       AuthServer       `json:"authServer"`
+	DatacenterServer DatacenterServer `json:"datacenterServer"`
 }
 
 type DeviceServer struct {
-	Version    string      `json:"version"`
-	HttpServer HttpServer  `json:"httpserver"`
-	GrpcServer GrpcServer  `json:"grpcserver"`
+	Version    string     `json:"version"`
+	HttpServer HttpServer `json:"httpserver"`
+	GrpcServer GrpcServer `json:"grpcserver"`
 }
 
 type AuthServer struct {
-	Version      string      `json:"version"`
-	HttpServer   HttpServer  `json:"httpserver"`
-	GrpcServer   GrpcServer  `json:"grpcserver"`
-	JwtKey       string      `json:"jwtKey"`
-	TokenTimeout int64       `json:"tokenTimeout"`
+	Version      string     `json:"version"`
+	HttpServer   HttpServer `json:"httpserver"`
+	GrpcServer   GrpcServer `json:"grpcserver"`
+	JwtKey       string     `json:"jwtKey"`
+	TokenTimeout int64      `json:"tokenTimeout"`
+}
+
+type DatacenterServer struct {
+	Version    string     `json:"version"`
+	HttpServer HttpServer `json:"httpserver"`
+	GrpcServer GrpcServer `json:"grpcserver"`
 }
 
 type HttpServer struct {
@@ -64,12 +72,11 @@ type Influx struct {
 }
 
 type Redis struct {
-	//Host     string `json:"host"`
-	//Port     string `json:"port"`
 	Url      string `json:"url"`
 	Username string `json:"username"`
 	Password string `json:"password"`
 	Dbname   string `json:"dbname"`
+	Db       int    `json:"db"`
 }
 
 type Mqtt struct {
@@ -91,6 +98,13 @@ type Datasource struct {
 	//Username string `json:"username"`
 	//Password string `json:"password"`
 	//Dbname   string `json:"dbname"`
+}
+
+type Runtime struct {
+	DefaultPollIntervalMs      int `json:"defaultPollIntervalMs"`
+	StateTTLMultiplier         int `json:"stateTtlMultiplier"`
+	ChannelReconnectIntervalMs int `json:"channelReconnectIntervalMs"`
+	CommandDefaultTimeoutMs    int `json:"commandDefaultTimeoutMs"`
 }
 
 //type DBType struct {

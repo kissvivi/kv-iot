@@ -2,8 +2,6 @@ package mqttchan
 
 import (
 	"fmt"
-	"strconv"
-	"strings"
 	MQTT "github.com/eclipse/paho.mqtt.golang"
 	"github.com/pkg/errors"
 	"kv-iot/config"
@@ -12,6 +10,8 @@ import (
 	"kv-iot/datacenter/service/device_auth"
 	"kv-iot/pkg/mqtt"
 	"log"
+	"strconv"
+	"strings"
 	"sync"
 )
 
@@ -33,16 +33,16 @@ type DeviceChanMqtt struct {
 	state     int
 	ChannelID string
 	data.DeviceChanConfig
-	running   bool
-	mu        sync.RWMutex
-	wg        sync.WaitGroup
-	authMap   *device_auth.DeviceAuthsMap
+	running bool
+	mu      sync.RWMutex
+	wg      sync.WaitGroup
+	authMap *device_auth.DeviceAuthsMap
 }
 
 // NewDeviceChanMqtt 创建一个新的DeviceChanMqtt实例
 func NewDeviceChanMqtt() *DeviceChanMqtt {
 	return &DeviceChanMqtt{
-		running: true,
+		running:   true,
 		state:     CLOSE,
 		ChannelID: "mqtt-default",
 		authMap:   device_auth.NewDeviceAuthsMap(),
@@ -108,18 +108,18 @@ func (d *DeviceChanMqtt) RegDevice() {
 			center := center.NewCenter(d.ChannelID, m.Payload())
 			msg := center.Decode()
 			topic := m.Topic()
-			
+
 			// 解析主题获取产品标识和设备编号
 			productKey, deviceNo := parseTopic(topic)
 			deviceUserName := fmt.Sprintf("%s:%s", productKey, deviceNo)
-			
+
 			log.Printf("解析主题: %s -> 产品: %s, 设备: %s", topic, productKey, deviceNo)
 
 			// 认证设备
 			isAuth := d.authMap.Has(deviceUserName)
 			msg.Device.ProductKey = productKey
 			msg.Device.DeviceNo = deviceNo
-			
+
 			// 检查是否为注册消息
 			if strings.HasSuffix(topic, "/register") {
 				log.Printf("收到设备注册消息: %s", deviceUserName)
@@ -150,15 +150,15 @@ func (d *DeviceChanMqtt) AuthDevice(msg data.KvMsg) (err error) {
 	productKey := fmt.Sprintf("%v", msg.Device.ProductKey)
 	deviceNo := msg.Device.DeviceNo
 	deviceUserName := fmt.Sprintf("%s:%s", productKey, deviceNo)
-	
+
 	// 这里应该调用设备管理服务的API进行认证
 	// 验证产品和设备是否在设备中心存在
 	log.Printf("设备认证: %s", deviceUserName)
-	
+
 	// 添加到认证列表
 	d.authMap.Add(deviceUserName)
 	log.Printf("设备认证成功，已添加到认证列表: %s", deviceUserName)
-	
+
 	// 触发设备上线状态更新
 	d.StateDevice(msg)
 	return nil
@@ -224,8 +224,8 @@ func parseTopic(topic string) (productKey, deviceNo string) {
 	parts := strings.Split(topic, "/")
 	// 确保主题格式正确
 	if len(parts) >= 3 {
-		productKey = parts[1]  // 第二个部分是产品标识
-		deviceNo = parts[2]    // 第三个部分是设备编号
+		productKey = parts[1] // 第二个部分是产品标识
+		deviceNo = parts[2]   // 第三个部分是设备编号
 	}
 	return
 }

@@ -1,23 +1,43 @@
 package mqtt
 
 import (
-	"fmt"
-	"math/rand"
+	"context"
 	"testing"
 	"time"
+
+	"kv-iot/internal/testsupport/mqttbroker"
 )
 
 func TestMqtt_Pub(t *testing.T) {
-
-	//for i := 0; i < 1; i++ {
-	cfg := NewConfigMqtt("172.18.61.43", 1883, "", "", "")
-	mc := NewMqtt(cfg)
-	for j := 0; j < 1000; j++ {
-		time.Sleep(5 * time.Second)
-		val := rand.Intn(40)
-		mc.Pub(1, "温度计/TMP-001/uplink", fmt.Sprintf("{\n  \"product_key\": \"温度计\",\n  \"property\":{\n    \"name\":\"温度\",\n    \"identifier\":\"温度\",\n    \"value\":%d\n  }\n}", val))
+	broker := mqttbroker.New(mqttbroker.Config{})
+	if err := broker.Start(); err != nil {
+		t.Fatalf("start broker: %v", err)
 	}
-	//}
+	t.Cleanup(func() {
+		_ = broker.Close()
+	})
 
-	//time.Sleep(time.Minute)
+	host, port := splitTestBrokerAddr(t, broker.Addr())
+	mc := NewMqtt(NewConfigMqtt(host, port, "mqtt-pub-test", "", ""))
+	if mc == nil {
+		t.Fatal("mqtt client was not created")
+	}
+	t.Cleanup(func() {
+		mc.Conn.Disconnect(100)
+	})
+
+	mc.Pub(1, "iot/test/device/uplink", `{"value":25.5}`)
+
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancel()
+	for {
+		select {
+		case message := <-broker.Published():
+			if message.Topic == "iot/test/device/uplink" {
+				return
+			}
+		case <-ctx.Done():
+			t.Fatal("published message was not observed by broker")
+		}
+	}
 }

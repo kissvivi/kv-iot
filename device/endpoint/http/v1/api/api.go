@@ -8,19 +8,30 @@ import (
 
 // BaseApi 建立API依赖
 type BaseApi struct {
-	ApiDevice        *device.ApiDevice
-	ApiDeviceConn    *device.ApiDeviceConn
-	ApiProduct       *product.ApiProduct
-	ApiProductModel  *product.ApiProductModel
-	ApiChannelInstance *channel.ApiChannelInstance
+	ApiDevice                 *device.ApiDevice
+	ApiDeviceConn             *device.ApiDeviceConn
+	ApiDevicePointBinding     *device.ApiDevicePointBinding
+	ApiProduct                *product.ApiProduct
+	ApiProductModel           *product.ApiProductModel
+	ApiProductProtocolProfile *product.ApiProductProtocolProfile
+	ApiProductPointBinding    *product.ApiProductPointBinding
+	ApiChannelInstance        *channel.ApiChannelInstance
 }
 
 // NewBaseApi 创建基础API实例
 func NewBaseApi(apiDevice *device.ApiDevice, apiProduct *product.ApiProduct) *BaseApi {
-	return &BaseApi{
+	baseApi := &BaseApi{
 		ApiDevice:  apiDevice,
 		ApiProduct: apiProduct,
 	}
+	if apiDevice != nil {
+		baseApi.ApiDevicePointBinding = device.NewApiDevicePointBinding(apiDevice.BaseService())
+	}
+	if apiProduct != nil {
+		baseApi.ApiProductProtocolProfile = product.NewApiProductProtocolProfile(apiProduct.BaseService())
+		baseApi.ApiProductPointBinding = product.NewApiProductPointBinding(apiProduct.BaseService())
+	}
+	return baseApi
 }
 
 // SetApiDeviceConn 设置设备连接API

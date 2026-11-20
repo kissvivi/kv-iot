@@ -46,7 +46,7 @@ func NewCenter(channelID string, data []byte) *Center {
 func (c *Center) Decode() (msg data.KvMsg) {
 	// 初始化消息结构，设置通道ID
 	msg.ChannelID = c.ChannelID
-	
+
 	// 尝试直接JSON解析
 	if err := json.Unmarshal(c.Data, &msg); err == nil {
 		log.Printf("直接JSON解析成功: 产品=%v, 设备=%s", msg.Device.ProductKey, msg.Device.DeviceNo)
@@ -104,7 +104,7 @@ func (c *Center) Decode() (msg data.KvMsg) {
 
 	// 确保通道ID已设置
 	msg.ChannelID = c.ChannelID
-	log.Printf("成功解析消息: 产品=%v, 设备=%s, 属性=%+v", 
+	log.Printf("成功解析消息: 产品=%v, 设备=%s, 属性=%+v",
 		msg.Device.ProductKey, msg.Device.DeviceNo, msg.Property)
 	return msg
 }
@@ -131,7 +131,7 @@ func (c *Center) ToSql(msg data.KvMsg) error {
 		return fmt.Errorf("SQL存储失败: %w", err)
 	}
 
-	log.Printf("数据已成功存储到SQL数据库: 设备=%s, 产品=%s", 
+	log.Printf("数据已成功存储到SQL数据库: 设备=%s, 产品=%s",
 		msg.Device.DeviceNo, msg.Device.ProductKey)
 	return nil
 }
@@ -159,7 +159,7 @@ func (c *Center) ToInflux(msg data.KvMsg) error {
 		return fmt.Errorf("InfluxDB存储失败: %w", err)
 	}
 
-	log.Printf("数据已成功存储到InfluxDB: 设备=%s, 产品=%s", 
+	log.Printf("数据已成功存储到InfluxDB: 设备=%s, 产品=%s",
 		msg.Device.DeviceNo, msg.Device.ProductKey)
 	return nil
 }

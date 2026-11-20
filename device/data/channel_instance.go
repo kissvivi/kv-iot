@@ -10,6 +10,8 @@ const (
 	ChannelTypeMQTT      = "mqtt"
 	ChannelTypeTCP       = "tcp"
 	ChannelTypeModbusTCP = "modbus_tcp"
+	ChannelTypeTCPRaw    = "tcp_raw"
+	ChannelTypeTCPFrame  = "tcp_frame"
 	ChannelTypeHTTP      = "http"
 	ChannelTypeWebSocket = "websocket"
 )
@@ -25,19 +27,21 @@ const (
 // ChannelInstance 通道实例 - 代表实际运行的通信通道
 type ChannelInstance struct {
 	gorm.Model
-	ChannelID     string    `json:"channel_id" gorm:"column:channel_id"`       // 关联的通道模板ID
-	ProductID     int64     `json:"product_id" gorm:"column:product_id"`       // 关联的产品ID
-	ProductKey    string    `json:"product_key" gorm:"column:product_key"`     // 产品标识
-	InstanceName  string    `json:"instance_name" gorm:"column:instance_name"` // 实例名称
-	ChannelType   string    `json:"channel_type" gorm:"column:channel_type"`   // 通道类型(mqtt/tcp/modbus_tcp等)
-	Config        string    `json:"config" gorm:"column:config"`               // 通道配置(JSON格式)
-	Status        int       `json:"status" gorm:"column:status"`               // 通道状态
-	RunningPort   string    `json:"running_port" gorm:"column:running_port"`   // 运行端口
-	StartUpTime   time.Time `json:"start_up_time" gorm:"column:start_up_time"` // 启动时间
+	ChannelID     string    `json:"channel_id" gorm:"column:channel_id"`         // 关联的通道模板ID
+	ProductID     int64     `json:"product_id" gorm:"column:product_id"`         // 关联的产品ID
+	ProductKey    string    `json:"product_key" gorm:"column:product_key"`       // 产品标识
+	InstanceName  string    `json:"instance_name" gorm:"column:instance_name"`   // 实例名称
+	ChannelType   string    `json:"channel_type" gorm:"column:channel_type"`     // 通道类型(mqtt/tcp/modbus_tcp等)
+	Config        string    `json:"config" gorm:"column:config"`                 // 通道配置(JSON格式)
+	Status        int       `json:"status" gorm:"column:status"`                 // 通道状态
+	RunningPort   string    `json:"running_port" gorm:"column:running_port"`     // 运行端口
+	StartUpTime   time.Time `json:"start_up_time" gorm:"column:start_up_time"`   // 启动时间
 	LastHeartbeat time.Time `json:"last_heartbeat" gorm:"column:last_heartbeat"` // 最后心跳时间
-	ErrorMsg      string    `json:"error_msg" gorm:"column:error_msg"`         // 错误信息
-	MaxConn       int       `json:"max_conn" gorm:"column:max_conn"`           // 最大连接数
-	CurrentConn   int       `json:"current_conn" gorm:"column:current_conn"`   // 当前连接数
+	ErrorMsg      string    `json:"error_msg" gorm:"column:error_msg"`           // 错误信息
+	MaxConn       int       `json:"max_conn" gorm:"column:max_conn"`             // 最大连接数
+	CurrentConn   int       `json:"current_conn" gorm:"column:current_conn"`     // 当前连接数
+	Enabled       bool      `json:"enabled" gorm:"column:enabled;default:true"`
+	RuntimeNode   string    `json:"runtime_node" gorm:"column:runtime_node;size:128;index"`
 }
 
 // TableName 设置表名

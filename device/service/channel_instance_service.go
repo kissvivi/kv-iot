@@ -1,10 +1,11 @@
 package service
 
 import (
-	"kv-iot/device/data"
 	"encoding/json"
 	"errors"
+	"kv-iot/device/data"
 	"log"
+	"strings"
 	"sync"
 	"time"
 )
@@ -20,7 +21,7 @@ type ChannelInstanceService interface {
 	// 获取所有通道实例
 	GetAllChannelInstances() (error, []data.ChannelInstance)
 	// 更新通道实例
-	UpdateChannelInstance(instance *data.ChannelInstance) error
+	UpdateChannelInstance(id int64, update ChannelInstanceUpdate) (*data.ChannelInstance, error)
 	// 删除通道实例
 	DeleteChannelInstance(id int64) error
 	// 启动通道实例
@@ -37,6 +38,18 @@ type ChannelInstanceService interface {
 	IncreaseConnectionCount(id int64) error
 	// 减少连接计数
 	DecreaseConnectionCount(id int64) error
+}
+
+type ChannelInstanceUpdate struct {
+	ChannelID    *string `json:"channel_id"`
+	ProductID    *int64  `json:"product_id"`
+	ProductKey   *string `json:"product_key"`
+	InstanceName *string `json:"instance_name"`
+	ChannelType  *string `json:"channel_type"`
+	Config       *string `json:"config"`
+	Status       *int    `json:"status"`
+	MaxConn      *int    `json:"max_conn"`
+	Enabled      *bool   `json:"enabled"`
 }
 
 // ChannelInstanceServiceImpl 通道实例服务实现
@@ -66,6 +79,10 @@ func (s *ChannelInstanceServiceImpl) CreateChannelInstance(instance *data.Channe
 	// 设置默认值
 	instance.Status = data.ChannelStatusDisabled
 	instance.CurrentConn = 0
+	instance.Enabled = true
+	now := time.Now()
+	instance.StartUpTime = now
+	instance.LastHeartbeat = now
 
 	// 保存到数据库
 	return s.channelInstanceRepo.Add(*instance)
@@ -87,29 +104,51 @@ func (s *ChannelInstanceServiceImpl) GetAllChannelInstances() (error, []data.Cha
 }
 
 // UpdateChannelInstance 更新通道实例
-func (s *ChannelInstanceServiceImpl) UpdateChannelInstance(instance *data.ChannelInstance) error {
-	// 验证通道配置
+func (s *ChannelInstanceServiceImpl) UpdateChannelInstance(id int64, update ChannelInstanceUpdate) (*data.ChannelInstance, error) {
+	err, instance := s.channelInstanceRepo.FindByID(id)
+	if err != nil {
+		return nil, err
+	}
+	if instance == nil {
+		return nil, errors.New("channel instance not found")
+	}
+	if update.ChannelID != nil {
+		instance.ChannelID = strings.TrimSpace(*update.ChannelID)
+	}
+	if update.ProductID != nil {
+		instance.ProductID = *update.ProductID
+	}
+	if update.ProductKey != nil {
+		instance.ProductKey = strings.TrimSpace(*update.ProductKey)
+	}
+	if update.InstanceName != nil {
+		instance.InstanceName = strings.TrimSpace(*update.InstanceName)
+	}
+	if update.ChannelType != nil {
+		instance.ChannelType = strings.TrimSpace(*update.ChannelType)
+	}
+	if update.Config != nil {
+		instance.Config = *update.Config
+	}
+	if update.Status != nil {
+		instance.Status = *update.Status
+	}
+	if update.MaxConn != nil {
+		instance.MaxConn = *update.MaxConn
+	}
+	if update.Enabled != nil {
+		instance.Enabled = *update.Enabled
+	}
+	if instance.InstanceName == "" {
+		return nil, errors.New("channel instance name is required")
+	}
 	if err := s.validateChannelConfig(instance.ChannelType, instance.Config); err != nil {
-		return err
+		return nil, err
 	}
-
-	// 转换ID类型
-	id := int64(instance.ID)
-
-	// 如果通道正在运行，需要先停止
-	if instance.Status == data.ChannelStatusRunning {
-		if err := s.StopChannelInstance(id); err != nil {
-			return err
-		}
-		defer func() {
-			// 更新后尝试重启
-			if err := s.StartChannelInstance(id); err != nil {
-				log.Printf("Failed to restart channel instance %d after update: %v", id, err)
-			}
-		}()
+	if err := s.channelInstanceRepo.Update(*instance); err != nil {
+		return nil, err
 	}
-
-	return s.channelInstanceRepo.Update(*instance)
+	return instance, nil
 }
 
 // DeleteChannelInstance 删除通道实例
@@ -161,6 +200,7 @@ func (s *ChannelInstanceServiceImpl) StartChannelInstance(id int64) error {
 
 	// 更新状态
 	instance.Status = data.ChannelStatusRunning
+	instance.Enabled = true
 	instance.StartUpTime = time.Now()
 	instance.LastHeartbeat = time.Now()
 	instance.ErrorMsg = ""
@@ -189,7 +229,7 @@ func (s *ChannelInstanceServiceImpl) StopChannelInstance(id int64) error {
 
 	// 检查状态
 	if instance.Status == data.ChannelStatusDisabled {
-		return errors.New("channel instance already stopped")
+		return nil
 	}
 
 	// 停止通道服务（这里是模拟，实际应该根据不同的通道类型停止对应的服务）
@@ -197,6 +237,7 @@ func (s *ChannelInstanceServiceImpl) StopChannelInstance(id int64) error {
 
 	// 更新状态
 	instance.Status = data.ChannelStatusDisabled
+	instance.Enabled = false
 	instance.CurrentConn = 0
 
 	// 保存到数据库
@@ -272,37 +313,26 @@ func (s *ChannelInstanceServiceImpl) DecreaseConnectionCount(id int64) error {
 
 // validateChannelConfig 验证通道配置
 func (s *ChannelInstanceServiceImpl) validateChannelConfig(channelType, config string) error {
-	// 根据不同的通道类型验证配置
+	var values map[string]interface{}
+	if err := json.Unmarshal([]byte(config), &values); err != nil {
+		return errors.New("invalid channel config JSON: " + err.Error())
+	}
 	switch channelType {
 	case data.ChannelTypeMQTT:
-		// MQTT配置验证
-		var mqttConfig map[string]interface{}
-		if err := json.Unmarshal([]byte(config), &mqttConfig); err != nil {
-			return errors.New("invalid MQTT config format: " + err.Error())
+		url, _ := values["url"].(string)
+		if strings.TrimSpace(url) == "" {
+			host, _ := values["host"].(string)
+			if strings.TrimSpace(host) == "" {
+				return errors.New("MQTT config requires url or host")
+			}
 		}
-		// 检查必要字段
-		if _, ok := mqttConfig["port"]; !ok {
-			return errors.New("MQTT config missing port")
+	case data.ChannelTypeTCP, data.ChannelTypeTCPRaw, data.ChannelTypeTCPFrame, data.ChannelTypeModbusTCP:
+		host, _ := values["host"].(string)
+		if strings.TrimSpace(host) == "" {
+			return errors.New(channelType + " config missing host")
 		}
-	case data.ChannelTypeTCP:
-		// TCP配置验证
-		var tcpConfig map[string]interface{}
-		if err := json.Unmarshal([]byte(config), &tcpConfig); err != nil {
-			return errors.New("invalid TCP config format: " + err.Error())
-		}
-		// 检查必要字段
-		if _, ok := tcpConfig["port"]; !ok {
-			return errors.New("TCP config missing port")
-		}
-	case data.ChannelTypeModbusTCP:
-		// ModbusTCP配置验证
-		var modbusConfig map[string]interface{}
-		if err := json.Unmarshal([]byte(config), &modbusConfig); err != nil {
-			return errors.New("invalid ModbusTCP config format: " + err.Error())
-		}
-		// 检查必要字段
-		if _, ok := modbusConfig["port"]; !ok {
-			return errors.New("ModbusTCP config missing port")
+		if _, ok := values["port"]; !ok {
+			return errors.New(channelType + " config missing port")
 		}
 	default:
 		return errors.New("unsupported channel type: " + channelType)

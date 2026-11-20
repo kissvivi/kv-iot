@@ -43,11 +43,11 @@ func (i *Influx) AddFluxData(msg data.KvMsg) error {
 	productKey := "unknown"
 	if pk, ok := msg.ProductKey.(string); ok {
 		productKey = pk
-	} else if pk != nil {
+	} else if msg.ProductKey != nil {
 		productKey = fmt.Sprintf("%v", msg.ProductKey)
 	}
 
-	log.Printf("准备写入InfluxDB: 设备=%s, 产品=%s, 属性=%s, 值类型=%T, 值=%v", 
+	log.Printf("准备写入InfluxDB: 设备=%s, 产品=%s, 属性=%s, 值类型=%T, 值=%v",
 		msg.Device.DeviceNo, productKey, msg.Property.Identifier, msg.Property.Value, msg.Property.Value)
 
 	now := time.Now()
@@ -57,7 +57,7 @@ func (i *Influx) AddFluxData(msg data.KvMsg) error {
 	p := influxdb2.NewPointWithMeasurement("device_data")
 	p.AddTag("product_key", productKey)
 	p.AddTag("device_no", msg.Device.DeviceNo)
-	
+
 	if msg.Property.Identifier != "" {
 		p.AddTag("property", msg.Property.Identifier)
 	}

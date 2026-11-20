@@ -1,17 +1,23 @@
 package service
 
-// BaseService 服务容器，使用接口而非具体实现
-// 这样可以更容易进行测试和替换具体实现
+// BaseService is the service container used by the auth HTTP adapter.
 type BaseService struct {
-	UserService UserService
-	RoleService RoleService
+	UserService       UserService
+	RoleService       RoleService
+	ModuleService     ModuleService
+	PermissionService PermissionService
 }
 
-// NewBaseService 创建服务容器
-// 使用接口类型作为参数，提高代码灵活性和可测试性
-func NewBaseService(userService UserService, roleService RoleService) *BaseService {
+func NewBaseService(
+	userService UserService,
+	roleService RoleService,
+	moduleService ModuleService,
+	permissionService PermissionService,
+) *BaseService {
 	return &BaseService{
-		UserService: userService,
-		RoleService: roleService,
+		UserService:       userService,
+		RoleService:       roleService,
+		ModuleService:     moduleService,
+		PermissionService: permissionService,
 	}
 }

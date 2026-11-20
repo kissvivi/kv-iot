@@ -2,8 +2,8 @@ package sql
 
 import (
 	"fmt"
-	"kv-iot/db"
 	"kv-iot/datacenter/data"
+	"kv-iot/db"
 	"log"
 	"time"
 )
@@ -59,9 +59,9 @@ func (s *SqlService) saveDeviceInfo(msg data.KvMsg) error {
 
 	// 使用GORM全局实例执行SQL
 	if db.MYSQLDB != nil {
-		err := db.MYSQLDB.Exec(query, 
-			productKeyStr, 
-			msg.Device.DeviceNo, 
+		err := db.MYSQLDB.Exec(query,
+			productKeyStr,
+			msg.Device.DeviceNo,
 			msg.Device.Name, // 直接使用字符串，不需要nil检查
 			time.Now(),
 		).Error
@@ -106,7 +106,7 @@ func (s *SqlService) savePropertyData(msg data.KvMsg) error {
 
 		// 使用GORM全局实例执行SQL
 		if db.MYSQLDB != nil {
-			err := db.MYSQLDB.Exec(query, 
+			err := db.MYSQLDB.Exec(query,
 				msg.Device.DeviceNo,
 				msg.Property.Identifier,
 				msg.Property.Name,
@@ -143,7 +143,7 @@ func (s *SqlService) saveEventData(msg data.KvMsg) error {
 
 		// 使用GORM全局实例执行SQL
 		if db.MYSQLDB != nil {
-			err := db.MYSQLDB.Exec(query, 
+			err := db.MYSQLDB.Exec(query,
 				msg.Device.DeviceNo,
 				msg.Event.Identifier,
 				msg.Event.Name,

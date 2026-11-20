@@ -3,6 +3,7 @@ package v1
 import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	authservice "kv-iot/auth/service"
 	"kv-iot/device/endpoint/http/v1/api"
 	"time"
 )
@@ -42,51 +43,91 @@ func InitRouter(api *api.BaseApi) engine {
 func routers(r *gin.Engine, baseApi *api.BaseApi) {
 	// 设备基础接口
 	deviceGroup := r.Group("/device")
+	deviceGroup.Use(authservice.AuthRequired())
 	{
 		deviceGroup.POST("", baseApi.ApiDevice.CreateDevice)
 		deviceGroup.GET("", baseApi.ApiDevice.GetAllDevice)
 		deviceGroup.GET("/by", baseApi.ApiDevice.GetDevice)
+		deviceGroup.PUT("/:id", baseApi.ApiDevice.UpdateDevice)
+		deviceGroup.GET("/:id", baseApi.ApiDevice.GetDeviceByID)
 		deviceGroup.DELETE("", baseApi.ApiDevice.DelDevice)
-		
+		deviceGroup.DELETE("/:id", baseApi.ApiDevice.DeleteDeviceByID)
+		deviceGroup.GET("/:id/point-bindings", baseApi.ApiDevicePointBinding.ListByDevice)
+		deviceGroup.POST("/:id/point-bindings", baseApi.ApiDevicePointBinding.Create)
+		deviceGroup.POST("/:id/point-bindings/sync", baseApi.ApiDevicePointBinding.SyncForDevice)
+		deviceGroup.GET("/point-bindings/:id", baseApi.ApiDevicePointBinding.Get)
+		deviceGroup.PUT("/point-bindings/:id", baseApi.ApiDevicePointBinding.Update)
+		deviceGroup.DELETE("/point-bindings/:id", baseApi.ApiDevicePointBinding.Delete)
+
 		// 设备连接管理接口
 		connGroup := deviceGroup.Group("/conn")
 		{
-			connGroup.GET("", baseApi.ApiDeviceConn.GetDeviceConn)            // 获取设备连接信息
-			connGroup.GET("/online", baseApi.ApiDeviceConn.GetOnlineDevices)   // 获取在线设备
-			connGroup.GET("/all", baseApi.ApiDeviceConn.GetAllDevicesConn)     // 获取所有设备连接
+			connGroup.GET("", baseApi.ApiDeviceConn.GetDeviceConn)                 // 获取设备连接信息
+			connGroup.GET("/online", baseApi.ApiDeviceConn.GetOnlineDevices)       // 获取在线设备
+			connGroup.GET("/all", baseApi.ApiDeviceConn.GetAllDevicesConn)         // 获取所有设备连接
 			connGroup.GET("/product", baseApi.ApiDeviceConn.GetProductDevicesConn) // 根据产品获取设备连接
-			connGroup.DELETE("", baseApi.ApiDeviceConn.DisconnectDevice)       // 断开设备连接
+			connGroup.DELETE("", baseApi.ApiDeviceConn.DisconnectDevice)           // 断开设备连接
 		}
 	}
-	
+
 	// 产品基础接口
 	productGroup := r.Group("/product")
+	productGroup.Use(authservice.AuthRequired())
 	{
 		productGroup.POST("", baseApi.ApiProduct.CreateProduct)
 		productGroup.GET("", baseApi.ApiProduct.GetAllProduct)
 		productGroup.GET("/by", baseApi.ApiProduct.GetProduct)
+		productGroup.PUT("/:id", baseApi.ApiProduct.UpdateProduct)
+		productGroup.GET("/:id", baseApi.ApiProduct.GetProductByID)
 		productGroup.DELETE("", baseApi.ApiProduct.DelProduct)
-		
+		productGroup.DELETE("/:id", baseApi.ApiProduct.DeleteProductByID)
+		productGroup.GET("/:id/model", baseApi.ApiProductModel.GetProductModel)
+		productGroup.POST("/:id/model", baseApi.ApiProductModel.CreateProductModel)
+		productGroup.PUT("/:id/model", baseApi.ApiProductModel.UpdateProductModel)
+		productGroup.DELETE("/:id/model", baseApi.ApiProductModel.DeleteProductModel)
+		productGroup.GET("/:id/profiles", baseApi.ApiProductProtocolProfile.ListByProduct)
+		productGroup.POST("/:id/profiles", baseApi.ApiProductProtocolProfile.Create)
+
 		// 产品物模型接口
 		modelGroup := productGroup.Group("/model")
 		{
-			modelGroup.GET("", baseApi.ApiProductModel.GetProductModel)        // 获取产品物模型
-			modelGroup.POST("", baseApi.ApiProductModel.CreateProductModel)    // 创建产品物模型
-			modelGroup.GET("/schema", baseApi.ApiProductModel.GetProductSchema) // 获取物模型Schema
+			modelGroup.GET("", baseApi.ApiProductModel.GetProductModel)              // 获取产品物模型
+			modelGroup.POST("", baseApi.ApiProductModel.CreateProductModel)          // 创建产品物模型
+			modelGroup.GET("/schema", baseApi.ApiProductModel.GetProductSchema)      // 获取物模型Schema
 			modelGroup.POST("/validate", baseApi.ApiProductModel.ValidateDeviceData) // 验证设备数据
 		}
 	}
-	
+
+	profileGroup := r.Group("/profiles")
+	profileGroup.Use(authservice.AuthRequired())
+	{
+		profileGroup.GET("/:id", baseApi.ApiProductProtocolProfile.Get)
+		profileGroup.PUT("/:id", baseApi.ApiProductProtocolProfile.Update)
+		profileGroup.DELETE("/:id", baseApi.ApiProductProtocolProfile.Delete)
+		profileGroup.GET("/:id/point-bindings", baseApi.ApiProductPointBinding.ListByProfile)
+		profileGroup.POST("/:id/point-bindings", baseApi.ApiProductPointBinding.Create)
+	}
+
+	pointBindingGroup := r.Group("/point-bindings")
+	pointBindingGroup.Use(authservice.AuthRequired())
+	{
+		pointBindingGroup.POST("/validate", baseApi.ApiProductPointBinding.Validate)
+		pointBindingGroup.GET("/:id", baseApi.ApiProductPointBinding.Get)
+		pointBindingGroup.PUT("/:id", baseApi.ApiProductPointBinding.Update)
+		pointBindingGroup.DELETE("/:id", baseApi.ApiProductPointBinding.Delete)
+	}
+
 	// 通道实例管理接口
 	channelGroup := r.Group("/channel")
+	channelGroup.Use(authservice.AuthRequired())
 	{
-		channelGroup.POST("/instance", baseApi.ApiChannelInstance.CreateChannelInstance)         // 创建通道实例
-		channelGroup.GET("/instance", baseApi.ApiChannelInstance.GetChannelInstances)           // 获取通道实例列表
-		channelGroup.GET("/instance/:id", baseApi.ApiChannelInstance.GetChannelInstance)        // 获取通道实例详情
-		channelGroup.PUT("/instance/:id", baseApi.ApiChannelInstance.UpdateChannelInstance)     // 更新通道实例
-		channelGroup.DELETE("/instance/:id", baseApi.ApiChannelInstance.DeleteChannelInstance)  // 删除通道实例
-		channelGroup.POST("/instance/:id/start", baseApi.ApiChannelInstance.StartChannelInstance)    // 启动通道实例
-		channelGroup.POST("/instance/:id/stop", baseApi.ApiChannelInstance.StopChannelInstance)      // 停止通道实例
+		channelGroup.POST("/instance", baseApi.ApiChannelInstance.CreateChannelInstance)              // 创建通道实例
+		channelGroup.GET("/instance", baseApi.ApiChannelInstance.GetChannelInstances)                 // 获取通道实例列表
+		channelGroup.GET("/instance/:id", baseApi.ApiChannelInstance.GetChannelInstance)              // 获取通道实例详情
+		channelGroup.PUT("/instance/:id", baseApi.ApiChannelInstance.UpdateChannelInstance)           // 更新通道实例
+		channelGroup.DELETE("/instance/:id", baseApi.ApiChannelInstance.DeleteChannelInstance)        // 删除通道实例
+		channelGroup.POST("/instance/:id/start", baseApi.ApiChannelInstance.StartChannelInstance)     // 启动通道实例
+		channelGroup.POST("/instance/:id/stop", baseApi.ApiChannelInstance.StopChannelInstance)       // 停止通道实例
 		channelGroup.POST("/instance/:id/restart", baseApi.ApiChannelInstance.RestartChannelInstance) // 重启通道实例
 		channelGroup.GET("/instance/:id/status", baseApi.ApiChannelInstance.GetChannelInstanceStatus) // 获取通道实例状态
 		channelGroup.PUT("/instance/:id/config", baseApi.ApiChannelInstance.UpdateChannelConfig)      // 更新通道配置

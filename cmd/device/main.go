@@ -6,10 +6,12 @@ import (
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 	"kv-iot/config"
+	"kv-iot/db"
 	"kv-iot/device/data"
 	"kv-iot/device/data/repo"
 	v1 "kv-iot/device/endpoint/http/v1"
 	"kv-iot/device/endpoint/http/v1/api"
+	"kv-iot/device/endpoint/http/v1/api/channel"
 	"kv-iot/device/endpoint/http/v1/api/device"
 	"kv-iot/device/endpoint/http/v1/api/product"
 	"kv-iot/device/service"
@@ -56,19 +58,23 @@ func runServer(cmd *cobra.Command, args []string) {
 	kvpropetyImpl := service.NewKvPropertyServiceImpl(repo.KvPropertyRepo{})
 	productsImpl := service.NewProductsServiceImpl(repo.ProductsRepo{})
 	productModelImpl := service.NewProductModelServiceImpl(kvpropetyImpl, kvactionImpl, kveventImpl)
+	channelInstanceImpl := service.NewChannelInstanceServiceImpl(repo.NewChannelInstanceRepo(db.MYSQLDB))
 	//base service
 	baseService := service.NewBaseService(channimpl, deviceImpl, kvactionImpl, kveventImpl, kvpropetyImpl, productsImpl)
 	baseService.SetDeviceConnService(deviceConnImpl)
 	baseService.SetProductModelService(productModelImpl)
+	baseService.SetChannelInstanceService(channelInstanceImpl)
 	//API实例
 	deviceApi := device.NewApiDevice(baseService)
 	deviceConnApi := device.NewApiDeviceConn(baseService)
 	productApi := product.NewApiProduct(baseService)
 	productModelApi := product.NewApiProductModel(baseService)
+	channelInstanceApi := channel.NewApiChannelInstance(baseService)
 	//设置API
 	baseApi := api.NewBaseApi(deviceApi, productApi)
 	baseApi.SetApiDeviceConn(deviceConnApi)
 	baseApi.SetApiProductModel(productModelApi)
+	baseApi.SetApiChannelInstance(channelInstanceApi)
 
 	engine := v1.InitRouter(baseApi)
 	s := initServer(cfg, engine)
@@ -108,7 +114,7 @@ func initGrpcServer(cfg *config.Config) {
 	// 使用配置中的gRPC端口，默认为9000
 	grpcAddr := fmt.Sprintf("%v:%v", cfg.Application.DeviceServer.GrpcServer.Host, cfg.Application.DeviceServer.GrpcServer.Port)
 	log.Printf("正在初始化gRPC服务，监听地址: %s", grpcAddr)
-	
+
 	lis, err := net.Listen("tcp", grpcAddr)
 	if err != nil {
 		log.Printf("gRPC监听失败: %v", err)

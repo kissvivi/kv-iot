@@ -186,7 +186,7 @@ func selectSort(arr []int) []int {
 
 func EerFen(arr []int, target int) int {
 	left, right := 0, len(arr)-1
-	for {
+	for left <= right {
 		p := left + (right-left)/2
 		if arr[p] == target {
 			return p

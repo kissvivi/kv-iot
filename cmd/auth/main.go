@@ -39,8 +39,23 @@ func runServer(cmd *cobra.Command, args []string) {
 	//初始化DB
 	data.InitDB(cfg)
 
-	//new 建立依赖
-	baseApi := api.NewBaseApi(api.NewUserApiImpl(service.NewBaseService(service.NewUserServiceImpl(repo.UserRepo{}), service.NewRoleServiceImpl(repo.RoleRepo{}))))
+	// 建立认证与RBAC依赖
+	userRepo := repo.UserRepo{}
+	roleRepo := repo.RoleRepo{}
+	moduleRepo := repo.ModuleRepo{}
+	permissionRepo := repo.PermissionRepo{}
+	userService := service.NewUserServiceImpl(userRepo, roleRepo)
+	bootstrapAdmin(userService)
+	roleService := service.NewRoleServiceImpl(roleRepo, moduleRepo, permissionRepo)
+	moduleService := service.NewModuleServiceImpl(moduleRepo)
+	permissionService := service.NewPermissionServiceImpl(permissionRepo, roleRepo, moduleRepo)
+	baseService := service.NewBaseService(userService, roleService, moduleService, permissionService)
+	baseApi := api.NewBaseApi(
+		api.NewUserApiImpl(baseService),
+		api.NewRoleApiImpl(baseService),
+		api.NewModuleApiImpl(baseService),
+		api.NewPermissionApiImpl(baseService),
+	)
 
 	engine := v1.InitRouter(baseApi)
 	s := initServer(cfg, engine)
@@ -78,6 +93,24 @@ func runServer(cmd *cobra.Command, args []string) {
 		return
 	}
 
+}
+
+func bootstrapAdmin(userService service.UserService) {
+	username := os.Getenv("KV_IOT_BOOTSTRAP_ADMIN_USERNAME")
+	password := os.Getenv("KV_IOT_BOOTSTRAP_ADMIN_PASSWORD")
+	if username == "" || password == "" {
+		return
+	}
+	_, err := userService.CreateUser(service.CreateUserInput{
+		UserName: username,
+		Password: password,
+		IsAdmin:  true,
+	})
+	if err != nil {
+		log.Printf("初始化管理员跳过: %v", err)
+		return
+	}
+	log.Printf("已初始化管理员用户: %s", username)
 }
 
 func initGrpcServer(cfg *config.Config) {
